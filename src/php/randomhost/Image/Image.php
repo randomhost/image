@@ -53,6 +53,13 @@ class Image
     const MERGE_SCALE_DST = 2;
 
     /**
+     * Merge images using the destination image size, do not upscale
+     *
+     * @var int
+     */
+    const MERGE_SCALE_DST_NO_UPSCALE = 3;
+
+    /**
      * Image resource identifier
      *
      * @var resource
@@ -321,7 +328,7 @@ class Image
         // determine re-sampling strategy
         switch ($strategy) {
 
-            // merge using the destination image dimensions
+        // merge using the destination image dimensions
         case self::MERGE_SCALE_DST:
 
             $dstWidth = $this->width;
@@ -329,7 +336,22 @@ class Image
 
             break;
 
-            // merge using the source image dimensions
+        // merge using the destination image dimensions, do not upscale
+        case self::MERGE_SCALE_DST_NO_UPSCALE:
+
+            $dstWidth = $this->width;
+            if ($dstWidth > $srcImage->width) {
+                $dstWidth = $srcImage->width;
+            }
+
+            $dstHeight = $this->height;
+            if ($dstHeight > $srcImage->height) {
+                $dstHeight = $srcImage->height;
+            }
+
+            break;
+
+        // merge using the source image dimensions
         case self::MERGE_SCALE_SRC:
         default:
 
