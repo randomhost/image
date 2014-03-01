@@ -12,10 +12,10 @@
     <summary>Encapsulates common GD library operations in PHP classes.</summary>
     <description>
         This package encapsulates some common GD library operations in PHP
-        classes. It was created as part of the PHP-Webcam-Overlay package but is
+        classes. It was created as part of the PHP_Webcam_Overlay package but is
         released as a separate component so it can be used in other packages.
 
-        Because it was created as a dependency of the PHP-Webcam-Overlay package,
+        Because it was created as a dependency of the PHP_Webcam_Overlay package,
         it does only support a small subset of the available image handling
         functions.
     </description>
