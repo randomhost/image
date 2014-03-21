@@ -195,7 +195,7 @@ class BorderTest extends \PHPUnit_Framework_TestCase
         
         $this->assertInstanceOf(
             'randomhost\\Image\\Text\\Decorator\\Border',
-            $border->insertText($xPosition, $yPosition, 'test')
+            $border->insertText($xPosition, $yPosition, $text)
         );
     }
 
