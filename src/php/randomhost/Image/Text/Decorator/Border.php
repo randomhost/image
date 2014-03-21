@@ -95,7 +95,7 @@ class Border extends Generic implements Image\Text\Text
      * @throws \RuntimeException Thrown if $this->image is not a valid image
      *                           resource or the font file isn't set.
      */
-    public function insertTextBorder($xPosition, $yPosition, $text)
+    protected function insertTextBorder($xPosition, $yPosition, $text)
     {
         if (!$this->getBorderColor() instanceof Image\Color) {
             throw new \RuntimeException(
