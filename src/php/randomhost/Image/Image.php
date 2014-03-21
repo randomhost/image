@@ -16,7 +16,7 @@
 namespace randomhost\Image;
 
 /**
- * This class represents an image in a (remote) filesystem or created in memory.
+ * Represents an image in a (remote) filesystem or created in memory.
  *
  * It supports rendering of text messages on top of the image and merging other
  * images into the image by passing in other Image objects.
@@ -123,19 +123,11 @@ class Image
     protected $modified = 0;
 
     /**
-     * ImageText object instance
-     *
-     * @var ImageText
-     */
-    protected $imageText = null;
-
-    /**
      * Constructor for this class.
      */
     private function __construct()
     {
         $this->time = time();
-        $this->imageText = new ImageText($this);
     }
 
     /**
@@ -235,76 +227,8 @@ class Image
     }
 
     /**
-     * Sets the text color used for rendering text overlays onto the image.
-     *
-     * @param array $rgb Text color in format array( red, green, blue ).
-     *
-     * @return $this
-     *
-     * @throws \RuntimeException Thrown if $this->image is not a valid image
-     * resource.
-     * @throws \InvalidArgumentException Thrown if $rgb has an invalid array format.
-     */
-    public function setTextColor(array $rgb)
-    {
-        $this->imageText->setTextColor($rgb);
-
-        return $this;
-    }
-
-    /**
-     * Sets the path to the font file used for rendering text overlays onto the
-     * image.
-     *
-     * @param string $path File system path to TTF font file to be used.
-     *
-     * @return $this
-     *
-     * @throws \InvalidArgumentException Thrown if the font file could not be loaded.
-     */
-    public function setTextFont($path)
-    {
-        $this->imageText->setTextFont($path);
-
-        return $this;
-    }
-
-    /**
-     * Sets the text size used for rendering text overlays onto the image.
-     *
-     * @param float $size Font size.
-     *
-     * @return $this
-     */
-    public function setTextSize($size)
-    {
-        $this->imageText->setTextSize($size);
-
-        return $this;
-    }
-
-    /**
-     * Renders the given text onto the image resource, using the given coordinates.
-     *
-     * @param int    $xPosition The x-ordinate.
-     * @param int    $yPosition The y-ordinate position of the fonts baseline.
-     * @param string $text      The text string in UTF-8 encoding.
-     *
-     * @return $this
-     *
-     * @throws \RuntimeException Thrown if $this->image is not a valid image
-     * resource or the font file isn't set
-     */
-    public function insertText($xPosition, $yPosition, $text)
-    {
-        $this->imageText->insertText($xPosition, $yPosition, $text);
-
-        return $this;
-    }
-
-    /**
      * Copies the given Image image stream into the image stream of the active
-     * instance.
+     * instance using a scaling strategy.
      *
      * @param Image $srcImage The source image.
      * @param int   $dstX     x-coordinate of destination point.
@@ -373,6 +297,47 @@ class Image
             (int)$dstHeight,
             $srcImage->width,
             $srcImage->height
+        );
+
+        return $this;
+    }
+
+    /**
+     * Copies the given Image image stream into the image stream of the active
+     * instance while applying the given alpha transparency.
+     * 
+     * This method does not support scaling.
+     *
+     * @param Image $srcImage The source image.
+     * @param int   $dstX     x-coordinate of destination point.
+     * @param int   $dstY     y-coordinate of destination point.
+     * @param int   $alpha    Alpha value (0-127)
+     *
+     * @return $this
+     *
+     * @throws \RuntimeException Trown if $this->image or $srcImage->image is
+     * not a valid image resource.
+     */
+    public function mergeAlpha(
+        Image $srcImage, $dstX, $dstY, $alpha = 127
+    ) {
+        if (!is_resource($this->image) || !is_resource($srcImage->image)) {
+            throw new \RuntimeException(
+                'Attempt to merge image data using an invalid image resource.'
+            );
+        }
+
+        // copy images around
+        @imagecopymerge(
+            $this->image,
+            $srcImage->image,
+            (int)$dstX,
+            (int)$dstY,
+            0,
+            0,
+            $srcImage->width,
+            $srcImage->height,
+            min(max(round(($alpha / 127 * 100)), 1), 100)
         );
 
         return $this;
