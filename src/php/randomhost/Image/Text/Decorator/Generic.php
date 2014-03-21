@@ -190,4 +190,20 @@ abstract class Generic implements Image\Text\Text
             $args
         );
     }
+    
+    /**
+     * Returns an Image\Image instance.
+     *
+     * @param int $width  Image width.
+     * @param int $height Image height.
+     *
+     * @return Image\Image
+     */
+    protected function getTempImage($width, $height)
+    {
+        return Image\Image::getInstanceByCreate(
+            $width,
+            $height
+        );
+    }
 } 

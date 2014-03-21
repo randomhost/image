@@ -125,7 +125,7 @@ class Border extends Generic implements Image\Text\Text
          * image into the original image using the original alpha value.
          */
         $image = $this->getImage();
-        $tempImage = Image\Image::getInstanceByCreate(
+        $tempImage = $this->getTempImage(
             $image->getWidth(),
             $image->getHeight()
         );
