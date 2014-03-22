@@ -86,7 +86,7 @@ class Generic implements Text
      */
     public function setImage(Image\Image $image)
     {
-        $this->image;
+        $this->image = $image;
 
         return $this;
     }
