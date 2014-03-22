@@ -199,7 +199,7 @@ class Image
         if (!is_dir($path)) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    'Cache directory at "%s" could not be found',
+                    'Cache directory at %s could not be found',
                     $path
                 )
             );
@@ -207,7 +207,7 @@ class Image
         if (!is_readable($path)) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    'Cache directory at "%s" is not readable',
+                    'Cache directory at %s is not readable',
                     $path
                 )
             );
@@ -215,7 +215,7 @@ class Image
         if (!is_writable($path)) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    'Cache directory at "%s" is not writable',
+                    'Cache directory at %s is not writable',
                     $path
                 )
             );
@@ -543,7 +543,7 @@ class Image
             throw new \UnexpectedValueException(
                 sprintf(
                     'Image type %s not supported',
-                    $read[2]
+                    image_type_to_mime_type($read[2])
                 )
             );
         }
