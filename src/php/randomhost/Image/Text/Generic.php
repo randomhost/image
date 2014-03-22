@@ -111,6 +111,8 @@ class Generic implements Text
     public function setTextColor(Image\Color $color)
     {
         $this->textColor = $color;
+
+        return $this;
     }
 
     /**
