@@ -31,7 +31,7 @@ use randomhost\Image\Image;
 class GenericTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Tests Generic::setImage() and Generic::getImage()
+     * Tests Generic::setImage() and Generic::getImage().
      *
      * @return void
      */
@@ -66,7 +66,7 @@ class GenericTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Generic::setTextColor() and Generic::getTextColor()
+     * Tests Generic::setTextColor() and Generic::getTextColor().
      *
      * @return void
      */
@@ -101,7 +101,7 @@ class GenericTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Generic::setTextFont() and Generic::getTextFont()
+     * Tests Generic::setTextFont() and Generic::getTextFont().
      *
      * @return void
      */
@@ -138,7 +138,7 @@ class GenericTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Generic::setTextSize() and Generic::getTextSize()
+     * Tests Generic::setTextSize() and Generic::getTextSize().
      *
      * @return void
      */
@@ -175,7 +175,7 @@ class GenericTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Generic::insertText()
+     * Tests Generic::insertText().
      *
      * @return void
      */
@@ -212,7 +212,7 @@ class GenericTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Generic::providesMethod()
+     * Tests Generic::providesMethod().
      *
      * @return void
      */
@@ -233,7 +233,7 @@ class GenericTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Generic::providesMethod() with a tree of decorators
+     * Tests Generic::providesMethod() with a tree of decorators.
      *
      * @return void
      */
@@ -274,7 +274,7 @@ class GenericTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Generic::__call() with a tree of decorators
+     * Tests Generic::__call() with a tree of decorators.
      *
      * @return void
      */
@@ -308,7 +308,7 @@ class GenericTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Generic::__call() with an undefined method
+     * Tests Generic::__call() with an undefined method.
      *
      * @return void
      */

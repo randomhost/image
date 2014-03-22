@@ -31,7 +31,7 @@ use randomhost\Image\Image;
 class BorderTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Tests Border::setBorderColor() and Border::getBorderColor()
+     * Tests Border::setBorderColor() and Border::getBorderColor().
      *
      * @return void
      */
@@ -52,7 +52,7 @@ class BorderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Border::setInsertText()
+     * Tests Border::setInsertText().
      *
      * @return void
      */
@@ -200,7 +200,7 @@ class BorderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Border::setInsertText() with an unset border color
+     * Tests Border::setInsertText() with an unset border color.
      *
      * @return void
      */
