@@ -1,5 +1,4 @@
 <?php
-
 // =========================================================================
 //
 // tests/bootstrap.php
@@ -14,9 +13,11 @@
 // =========================================================================
 
 // step 1: create the APP_TOPDIR constant that all components require
-define('APP_TOPDIR', realpath(__DIR__ . '/../../php'));
-define('APP_LIBDIR', realpath(__DIR__ . '/../../../vendor/php'));
-define('APP_TESTDIR', realpath(__DIR__ . '/php'));
+if (!defined('APP_TOPDIR')) {
+    define('APP_TOPDIR', realpath(__DIR__ . '/../../php'));
+    define('APP_LIBDIR', realpath(__DIR__ . '/../../../vendor/php'));
+    define('APP_TESTDIR', realpath(__DIR__ . '/php'));
+}
 
 // step 2: find the autoloader, and install it
 require_once(APP_LIBDIR . '/psr0.autoloader.php');
@@ -27,8 +28,7 @@ psr0_autoloader_searchFirst(APP_TESTDIR);
 psr0_autoloader_searchFirst(APP_TOPDIR);
 
 // step 4: enable ContractLib if it is available
-if (class_exists('Phix_Project\ContractLib\Contract'))
-{
-        \Phix_Project\ContractLib\Contract::EnforceWrappedContracts();
+if (class_exists('Phix_Project\ContractLib\Contract')) {
+    \Phix_Project\ContractLib\Contract::EnforceWrappedContracts();
 }
 

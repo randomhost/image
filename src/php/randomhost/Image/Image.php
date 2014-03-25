@@ -281,8 +281,6 @@ class Image
 
             $dstWidth = $srcImage->width;
             $dstHeight = $srcImage->height;
-
-            break;
         }
 
         // copy images around
@@ -348,7 +346,8 @@ class Image
      *
      * @return $this
      *
-     * @throws \RuntimeException Trown if $this->image is not a valid image resource.
+     * @throws \RuntimeException Thrown if $this->image is not a valid image
+     *                           resource.
      */
     public function render()
     {
