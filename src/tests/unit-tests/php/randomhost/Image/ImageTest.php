@@ -62,6 +62,12 @@ class ImageTest extends \PHPUnit_Framework_TestCase
             array('test.jpg', 'test.png', Image::MERGE_SCALE_DST),
             array('test.jpg', 'test.png', Image::MERGE_SCALE_DST_NO_UPSCALE),
             array('test.jpg', 'test.png', Image::MERGE_SCALE_SRC),
+            array('test.png', 'test_small.png', Image::MERGE_SCALE_DST),
+            array('test.png', 'test_small.png', Image::MERGE_SCALE_DST_NO_UPSCALE),
+            array('test.png', 'test_small.png', Image::MERGE_SCALE_SRC),
+            array('test_small.png', 'test.png', Image::MERGE_SCALE_DST),
+            array('test_small.png', 'test.png', Image::MERGE_SCALE_DST_NO_UPSCALE),
+            array('test_small.png', 'test.png', Image::MERGE_SCALE_SRC),
         );
     }
 
