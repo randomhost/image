@@ -601,6 +601,12 @@ class ImageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetWidth($imageName, $mimeType, $width, $height)
     {
+        /*
+         * This is done to shut up IDEs which complain about the parameters
+         * not being used so we can re-use the data provider.
+         */
+        unset($mimeType, $height);
+        
         $imagePath = $this->getTestDataPath($imageName);
 
         $image = Image::getInstanceByPath($imagePath);
@@ -626,6 +632,12 @@ class ImageTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetHeight($imageName, $mimeType, $width, $height)
     {
+        /*
+         * This is done to shut up IDEs which complain about the parameters
+         * not being used so we can re-use the data provider.
+         */
+        unset($mimeType, $width);
+        
         $imagePath = $this->getTestDataPath($imageName);
 
         $image = Image::getInstanceByPath($imagePath);
