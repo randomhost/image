@@ -85,7 +85,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase
             array('test.jpg', 'test.png', 64),
         );
     }
-    
+
     /**
      * Tests Image::getInstanceByPath() with a GIF image.
      *
@@ -259,6 +259,25 @@ class ImageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Tests Image::getInstanceByPath() with an invalid cache path.
+     *
+     * @return void
+     */
+    public function testGetInstanceByPathInvalidCachePath()
+    {
+        $cacheDir = 'doesNotExists';
+
+        $imagePath = $this->getTestDataPath('test.png');
+
+        $this->setExpectedException(
+            '\InvalidArgumentException',
+            'Cache directory at ' . $cacheDir . ' could not be found'
+        );
+
+        Image::getInstanceByPath($imagePath, $cacheDir);
+    }
+
+    /**
      * Tests Image::getInstanceByCreate().
      *
      * @return void
@@ -268,55 +287,14 @@ class ImageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Image::setCacheDir().
-     *
-     * @return void
-     */
-    public function testSetCacheDir()
-    {
-        $cacheDir = sys_get_temp_dir();
-
-        $imagePath = $this->getTestDataPath('test.png');
-
-        $image = Image::getInstanceByPath($imagePath);
-
-        $this->assertInstanceOf('randomhost\\Image\\Image', $image);
-
-        $this->assertSame($image, $image->setCacheDir($cacheDir));
-    }
-
-    /**
-     * Tests Image::setCacheDir().
-     *
-     * @return void
-     */
-    public function testSetCacheDirInvalidPath()
-    {
-        $cacheDir = 'doesNotExists';
-
-        $imagePath = $this->getTestDataPath('test.png');
-
-        $image = Image::getInstanceByPath($imagePath);
-
-        $this->assertInstanceOf('randomhost\\Image\\Image', $image);
-
-        $this->setExpectedException(
-            '\InvalidArgumentException',
-            'Cache directory at ' . $cacheDir . ' could not be found'
-        );
-
-        $this->assertSame($image, $image->setCacheDir($cacheDir));
-    }
-
-    /**
      * Tests Image::merge().
      *
      * @param string $firstImageName  First image name.
      * @param string $secondImageName Second image name.
      * @param int    $strategy        Merge strategy.
-     * 
+     *
      * @dataProvider providerMerge
-     * 
+     *
      * @return void
      */
     public function testMerge($firstImageName, $secondImageName, $strategy)
@@ -403,10 +381,10 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 
         $firstImage->merge($secondImage, 0, 0);
     }
-    
+
     /**
      * Tests Image::mergeAlpha().
-     * 
+     *
      * @param string $firstImageName  First image name.
      * @param string $secondImageName Second image name.
      * @param int    $alpha           Alpha value.
@@ -498,7 +476,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 
         $firstImage->mergeAlpha($secondImage, 0, 0);
     }
-    
+
     /**
      * Tests Image::render().
      *
@@ -612,7 +590,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase
          * not being used so we can re-use the data provider.
          */
         unset($mimeType, $height);
-        
+
         $imagePath = $this->getTestDataPath($imageName);
 
         $image = Image::getInstanceByPath($imagePath);
@@ -643,7 +621,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase
          * not being used so we can re-use the data provider.
          */
         unset($mimeType, $width);
-        
+
         $imagePath = $this->getTestDataPath($imageName);
 
         $image = Image::getInstanceByPath($imagePath);

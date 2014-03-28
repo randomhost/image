@@ -18,8 +18,7 @@ namespace randomhost\Image;
 /**
  * Represents an image in a (remote) filesystem or created in memory.
  *
- * It supports rendering of text messages on top of the image and merging other
- * images into the image by passing in other Image objects.
+ * It supports merging other images into the image by passing in other Image objects.
  *
  * @category  Image
  * @package   PHP_Image
@@ -184,46 +183,6 @@ class Image
             // free up memory
             imagedestroy($this->image);
         }
-    }
-
-    /**
-     * Sets the path to the cache directory.
-     *
-     * @param string $path Path to cache directory
-     *
-     * @return $this
-     * @throws \InvalidArgumentException
-     */
-    public function setCacheDir($path)
-    {
-        if (!is_dir($path)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Cache directory at %s could not be found',
-                    $path
-                )
-            );
-        }
-        if (!is_readable($path)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Cache directory at %s is not readable',
-                    $path
-                )
-            );
-        }
-        if (!is_writable($path)) {
-            throw new \InvalidArgumentException(
-                sprintf(
-                    'Cache directory at %s is not writable',
-                    $path
-                )
-            );
-        }
-
-        $this->cacheDir = realpath($path);
-
-        return $this;
     }
 
     /**
@@ -403,6 +362,44 @@ class Image
         return (int) $this->height;
     }
 
+    /**
+     * Sets the path to the cache directory.
+     *
+     * @param string $path Path to cache directory
+     *
+     * @return void
+     * @throws \InvalidArgumentException
+     */
+    protected function setCacheDir($path)
+    {
+        if (!is_dir($path)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Cache directory at %s could not be found',
+                    $path
+                )
+            );
+        }
+        if (!is_readable($path)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Cache directory at %s is not readable',
+                    $path
+                )
+            );
+        }
+        if (!is_writable($path)) {
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Cache directory at %s is not writable',
+                    $path
+                )
+            );
+        }
+
+        $this->cacheDir = realpath($path);
+    }
+    
     /**
      * Sets $this->pathCache based on the given $this->pathFile.
      *
