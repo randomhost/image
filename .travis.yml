@@ -8,6 +8,7 @@ before_script:
   - pear -D auto_discover=1 install pear.phpunit.de/phpcpd
   - pear -D auto_discover=1 install pear.phpunit.de/PHPUnit-3.7.33
   - pear -D auto_discover=1 install -Ba phix/phix4componentdev
+  - pear config-show
   - which phing
   - phing -f build.xml build-vendor
   - phpenv rehash
