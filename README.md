@@ -150,6 +150,162 @@ Outputs the image stream to the browser. For now, images will always be rendered
 as `image/png` to allow for full alpha-transparency support. Support for other
 formats may be added in a later version.
 
+### The Color object
+
+The `Color` object is merely a data container for defining color values to be
+used within the `PHP_Image` package. It comes with a set of setters and getters
+for setting and retrieving color and alpha channel data.
+
+#### Constructor
+
+The constructor takes 4 parameters which are all optional:
+
+- `$red`  
+Red component (0-255 or 0x00-0xFF).
+
+- `$green`  
+Green component (0-255 or 0x00-0xFF).
+
+- `$blue`  
+Blue component (0-255 or 0x00-0xFF).
+
+- `$alpha`  
+Alpha value (0-127)
+
+#### Configuring the color
+
+- `setRed($red)`  
+Sets the red component (0-255 or 0x00-0xFF).
+
+- `setGreen($green)`  
+Sets the green component (0-255 or 0x00-0xFF).
+
+- `setBlue($blue)`  
+Sets the blue component (0-255 or 0x00-0xFF).
+
+- `setAlpha($alpha)`  
+Sets the alpha value (0-127). 0 indicates completely opaque while 127 indicates
+completely transparent.
+
+#### Retrieving color data
+
+- `getRed()`  
+Returns the red component (0-255 or 0x00-0xFF).
+
+- `getGreen()`  
+Returns the green component (0-255 or 0x00-0xFF).
+
+- `getBlue()`  
+Returns the blue component (0-255 or 0x00-0xFF).
+
+- `getAlpha()`  
+Returns the alpha value (0-127). 0 indicates completely opaque while 127
+indicates completely transparent.
+
+#### Validating color data
+
+- `Color::validateColor($color)`  
+Validates the color value and throws an InvalidArgumentException if the value is
+invalid.
+
+- `Color::validateAlpha($alpha)`  
+Validates the alpha value and throws an InvalidArgumentException if the value is
+invalid.
+
+### The Image/Text/Generic object
+
+The `Image/Text/Generic` object is a generic text rendering object which can be
+extended with additional functionality using decorators.
+
+#### Constructor
+
+The constructor takes 1 optional parameter:
+
+- `$image`  
+An `Image` instance to operate on. This can also be set later using the
+`setImage()` method.
+
+#### Configuring the text
+
+- `setImage(Image\Image $image)`  
+Sets the `Image` object instance.
+
+- `setTextColor(Image\Color $color)`  
+Sets the `Color` used for rendering the text.
+
+- `setTextFont($path)`  
+Sets the path to the font file used for rendering.
+
+- `setTextSize($size)`  
+Sets the text size used for rendering.
+
+#### Retrieving text data
+
+- `getImage()`  
+Returns the `Image` object instance.
+
+- `getTextColor()`  
+Returns the `Color` used for rendering the text.
+
+- `getTextFont()`  
+Returns the path to the font file used for rendering.
+
+- `getTextSize()`  
+Returns the text size used for rendering.
+
+#### Rendering the text
+
+- `insertText($xPosition, $yPosition, $text)`  
+Renders the given text onto the image resource, using the given coordinates.
+
+### The Image/Text/Decorator object family
+
+The `Image/Text/Decorator` object family contains decorators for text rendering
+objects which add additional functionality to the `Image/Text/Generic` object or
+other objects implementing the `Image\Text\Text` interface.
+
+Since they wrap around any `Image\Text\Text` implementation which could also be
+another `Image/Text/Decorator` instance, they share all methods of the decorated
+object and might also define their own.
+
+#### Constructor
+
+The constructor depends on the specific `Image/Text/Decorator` implementation
+but usually takes at least one parameter which is the object to decorate:
+
+- `$text`  
+An `Image\Text\Text` implementation to decorate.
+
+#### Retrieving text decorator data
+
+- `providesMethod($name)`  
+Returns if the given method is implemented by one of the decorators in the
+object tree as decorators can be stacked.
+
+#### Rendering text using a decorator
+
+Since all decorators implement the same interface as the standard
+`Image/Text/Generic` object, rendering using decorated text objects works the
+same way as rendering using non-decorated objects:
+
+- `insertText($xPosition, $yPosition, $text)`  
+Renders the given text onto the image resource, using the given coordinates.
+
+### The Image/Text/Decorator/Border object
+
+The `Image/Text/Decorator/Border` object is a decorator for text rendering
+objects which adds a simple border to the rendered text.
+
+#### Configuring the border
+
+- `setBorderColor(Image\Color $color)`  
+Sets the `Color` used for rendering the border.
+
+#### Retrieving border data
+
+- `getBorderColor()`  
+Returns the `Color` used for rendering the border.
+
 System-Wide Installation
 ------------------------
 
