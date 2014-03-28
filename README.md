@@ -8,6 +8,148 @@ separate component so it can be used in other packages.
 Because it was created as a dependency of the PHP_Webcam_Overlay package, it
 does only support a small subset of the available image handling functions.
 
+Usage
+-----
+
+A basic approach at using this package could look like this:
+
+```php
+<?php
+namespace randomhost\Image;
+
+require 'psr0.autoloader.php';
+
+// load base image
+$image = Image::getInstanceByPath('image.png');
+
+// load overlay image
+$overlay = Image::getInstanceByPath('overlay.png');
+
+// insert overlay image on top of base image at x 15, y 20
+$image->merge($overlay, 15, 20);
+
+// setup a red text overlay
+$text = new Text\Generic($image);
+$text
+    ->setTextFont('vera.ttf')
+    ->setTextSize(12)
+    ->setTextColor(
+        new Color(
+            0xFF,
+            0x00,
+            0x00
+        )
+    );
+
+// setup a white border for the previously defined text overlay
+$text = new Text\Decorator\Border($text);
+$text->setBorderColor(
+    new Color(
+        0xFF,
+        0xFF,
+        0xFF
+    )
+);
+
+// render text overlay onto the image at x 20, y 10
+$text->insertText(
+    20,
+    10,
+    'Example text'
+);
+
+// render the image
+$image->render()
+```
+
+This will instantiate two image objects using image files from the file system,
+merge the images and render an overlay text on top.
+
+Assuming that you named this file `image.php`, you should now be able to
+access the image at `http://example.com/image.php`
+
+### The Image object
+
+The `Image` object represents an image in a (remote) filesystem or created in
+memory. It provides methods for retrieving information about the image and for
+merging other `Image` instances.
+
+#### Instantiation
+
+There are two methods for creating an `Image` object instance:
+one for  and another one for creating a new image in memory.
+
+1. `Image::getInstanceByPath($path, $cacheDir = '')`  
+   Creates an instance from an existing local or remote image file.
+    - `$path`  
+    Path or URL to the image file.
+    
+    - `$cacheDir`  
+    Optional: Directory path for caching image files.  
+    This comes in handy when retrieving images from remote locations as caching
+    them locally reduces the amount of HTTP requests which have to be made.
+
+3. `Image::getInstanceByCreate($width, $height)`  
+   Creates an empty instance with the given image dimensions which can be used
+   to merge (multiple) other `Image` instances into it.
+    - `$width`  
+    Width of the generated image.
+    
+    - `$height`  
+    Height of the generated image.
+
+#### Retrieving image data
+
+The following public methods for retrieving image related data are available:
+
+- `getMimetype()`  
+Returns the Mimetype of the image.
+
+- `getModified()`  
+Returns the last modified timestamp of the image. When working with an instance
+created with `getInstanceByCreate()`, this will be the time when the object was
+initially created.
+
+- `getWidth()`  
+Returns the width of the image in pixels.
+
+- `getHeight()`  
+Returns the height of the image in pixels.
+
+#### Combining images
+
+- `merge(Image $srcImage, $dstX, $dstY, $strategy = self::MERGE_SCALE_SRC)`  
+Merges the image resource of the given `Image` instance into the image resource
+of the active `Image` instance using the given coordinates and scaling strategy.
+
+- `mergeAlpha(Image $srcImage, $dstX, $dstY, $alpha = 127)`  
+Merges the image resource of the given `Image` instance into the image resource
+of the active `Image` instance using the given coordinates and alpha transparency.
+This method does not support scaling.
+
+#### Scaling strategies
+
+- `Image::MERGE_SCALE_SRC`  
+This strategy uses width and height of the `Image` instance given to `merge()`.
+If the image to be merged exceeds the dimensions of the target instance, it is
+cropped to fit the dimensions of the target instance.
+
+- `Image::MERGE_SCALE_DST`  
+This strategy re-sizes the `Image` instance given to `merge()` to match the
+dimensions of the target instance. The x and y offset given to `merge()` will
+however not be respected so the image to be merged may still be cropped.
+
+- `Image::MERGE_SCALE_DST_NO_UPSCALE`  
+This strategy works similar to `Image::MERGE_SCALE_DST`, but does not upscale
+the image to be merged if it is smaller than the target instance.
+
+#### Rendering the image
+
+- `render()`  
+Outputs the image stream to the browser. For now, images will always be rendered
+as `image/png` to allow for full alpha-transparency support. Support for other
+formats may be added in a later version.
+
 System-Wide Installation
 ------------------------
 
