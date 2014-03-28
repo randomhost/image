@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Random-Host/PHP_Image.svg)](https://travis-ci.org/Random-Host/PHP_Image)
+
 PHP_Image
 =========
 
