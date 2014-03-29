@@ -272,7 +272,7 @@ class Image
      *
      * @return $this
      *
-     * @throws \RuntimeException Trown if $this->image or $srcImage->image is
+     * @throws \RuntimeException Thrown if $this->image or $srcImage->image is
      * not a valid image resource.
      */
     public function mergeAlpha(
@@ -284,6 +284,8 @@ class Image
             );
         }
 
+        $percent = 100 - min(max(round(($alpha / 127 * 100)), 1), 100);
+        
         // copy images around
         @imagecopymerge(
             $this->image,
@@ -294,7 +296,7 @@ class Image
             0,
             $srcImage->width,
             $srcImage->height,
-            min(max(round(($alpha / 127 * 100)), 1), 100)
+            $percent
         );
 
         return $this;

@@ -118,19 +118,6 @@ class Border extends Generic implements Image\Text\Text
         $textColor = $this->getTextColor();
         $this->setTextColor($this->getBorderColor());
 
-        /*
-         * Overwrite the original image with a temporary image so we can restore
-         * alpha transparency by using as this allows us
-         * to restore the alpha transparency later by copying the temporary
-         * image into the original image using the original alpha value.
-         */
-        $image = $this->getImage();
-        $tempImage = $this->getTempImage(
-            $image->getWidth(),
-            $image->getHeight()
-        );
-        $this->setImage($tempImage);
-
         // render border
         parent::insertText($xPosition - 1, $yPosition - 1, $text);
         parent::insertText($xPosition - 1, $yPosition, $text);
@@ -140,12 +127,6 @@ class Border extends Generic implements Image\Text\Text
         parent::insertText($xPosition + 1, $yPosition - 1, $text);
         parent::insertText($xPosition + 1, $yPosition, $text);
         parent::insertText($xPosition + 1, $yPosition + 1, $text);
-
-        // restore original image
-        $this->setImage($image);
-
-        // merge temporary image into image
-        $this->getImage()->mergeAlpha($tempImage, 0, 0, $borderAlpha);
 
         // restore original text color for rendering the text
         $this->setTextColor($textColor);

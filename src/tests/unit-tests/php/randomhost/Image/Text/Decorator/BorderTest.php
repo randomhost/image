@@ -95,15 +95,6 @@ class BorderTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnSelf());
 
         $textMock->expects($this->at(2))
-            ->method('getImage')
-            ->will($this->returnValue($image));
-
-        $textMock->expects($this->at(3))
-            ->method('setImage')
-            ->with($this->isInstanceOf('randomhost\\Image\\Image'))
-            ->will($this->returnSelf());
-
-        $textMock->expects($this->at(4))
             ->method('insertText')
             ->with(
                 $this->identicalTo($xPosition - 1),
@@ -112,7 +103,7 @@ class BorderTest extends \PHPUnit_Framework_TestCase
             )
             ->will($this->returnSelf());
 
-        $textMock->expects($this->at(5))
+        $textMock->expects($this->at(3))
             ->method('insertText')
             ->with(
                 $this->identicalTo($xPosition - 1),
@@ -121,10 +112,28 @@ class BorderTest extends \PHPUnit_Framework_TestCase
             )
             ->will($this->returnSelf());
 
-        $textMock->expects($this->at(6))
+        $textMock->expects($this->at(4))
             ->method('insertText')
             ->with(
                 $this->identicalTo($xPosition - 1),
+                $this->identicalTo($yPosition + 1),
+                $this->identicalTo($text)
+            )
+            ->will($this->returnSelf());
+
+        $textMock->expects($this->at(5))
+            ->method('insertText')
+            ->with(
+                $this->identicalTo($xPosition),
+                $this->identicalTo($yPosition - 1),
+                $this->identicalTo($text)
+            )
+            ->will($this->returnSelf());
+
+        $textMock->expects($this->at(6))
+            ->method('insertText')
+            ->with(
+                $this->identicalTo($xPosition),
                 $this->identicalTo($yPosition + 1),
                 $this->identicalTo($text)
             )
@@ -133,7 +142,7 @@ class BorderTest extends \PHPUnit_Framework_TestCase
         $textMock->expects($this->at(7))
             ->method('insertText')
             ->with(
-                $this->identicalTo($xPosition),
+                $this->identicalTo($xPosition + 1),
                 $this->identicalTo($yPosition - 1),
                 $this->identicalTo($text)
             )
@@ -142,8 +151,8 @@ class BorderTest extends \PHPUnit_Framework_TestCase
         $textMock->expects($this->at(8))
             ->method('insertText')
             ->with(
-                $this->identicalTo($xPosition),
-                $this->identicalTo($yPosition + 1),
+                $this->identicalTo($xPosition + 1),
+                $this->identicalTo($yPosition),
                 $this->identicalTo($text)
             )
             ->will($this->returnSelf());
@@ -152,39 +161,12 @@ class BorderTest extends \PHPUnit_Framework_TestCase
             ->method('insertText')
             ->with(
                 $this->identicalTo($xPosition + 1),
-                $this->identicalTo($yPosition - 1),
-                $this->identicalTo($text)
-            )
-            ->will($this->returnSelf());
-
-        $textMock->expects($this->at(10))
-            ->method('insertText')
-            ->with(
-                $this->identicalTo($xPosition + 1),
-                $this->identicalTo($yPosition),
-                $this->identicalTo($text)
-            )
-            ->will($this->returnSelf());
-
-        $textMock->expects($this->at(11))
-            ->method('insertText')
-            ->with(
-                $this->identicalTo($xPosition + 1),
                 $this->identicalTo($yPosition + 1),
                 $this->identicalTo($text)
             )
             ->will($this->returnSelf());
 
-        $textMock->expects($this->at(12))
-            ->method('setImage')
-            ->with($this->identicalTo($image))
-            ->will($this->returnSelf());
-
-        $textMock->expects($this->at(13))
-            ->method('getImage')
-            ->will($this->returnValue($image));
-
-        $textMock->expects($this->at(14))
+        $textMock->expects($this->at(10))
             ->method('setTextColor')
             ->with($this->identicalTo($textColorMock))
             ->will($this->returnSelf());
