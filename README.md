@@ -82,21 +82,19 @@ There are two methods for creating an `Image` object instance:
 
 1. `Image::getInstanceByPath($path, $cacheDir = '')`  
    Creates an instance from an existing local or remote image file.
-    - `$path`  
-    Path or URL to the image file.
-    
-    - `$cacheDir`  
-    Optional: Directory path for caching image files.  
-    This comes in handy when retrieving images from remote locations as caching
-    them locally reduces the amount of HTTP requests which have to be made.
+     - `$path`  
+     Path or URL to the image file.
+     - `$cacheDir`  
+     Optional: Directory path for caching image files.  
+     This comes in handy when retrieving images from remote locations as caching
+     them locally reduces the amount of HTTP requests which have to be made.
 2. `Image::getInstanceByCreate($width, $height)`  
-   Creates an empty instance with the given image dimensions which can be used
-   to merge (multiple) other `Image` instances into it.
-    - `$width`  
-    Width of the generated image.
-    
-    - `$height`  
-    Height of the generated image.
+     Creates an empty instance with the given image dimensions which can be used
+     to merge (multiple) other `Image` instances into it.
+     - `$width`  
+     Width of the generated image.
+     - `$height`  
+     Height of the generated image.
 
 #### Retrieving image data
 
