@@ -79,7 +79,6 @@ merging other `Image` instances.
 #### Instantiation
 
 There are two methods for creating an `Image` object instance:
-one for  and another one for creating a new image in memory.
 
 1. `Image::getInstanceByPath($path, $cacheDir = '')`  
    Creates an instance from an existing local or remote image file.
