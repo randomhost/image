@@ -89,8 +89,7 @@ There are two methods for creating an `Image` object instance:
     Optional: Directory path for caching image files.  
     This comes in handy when retrieving images from remote locations as caching
     them locally reduces the amount of HTTP requests which have to be made.
-
-3. `Image::getInstanceByCreate($width, $height)`  
+2. `Image::getInstanceByCreate($width, $height)`  
    Creates an empty instance with the given image dimensions which can be used
    to merge (multiple) other `Image` instances into it.
     - `$width`  
