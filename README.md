@@ -333,13 +333,6 @@ you add PHP_Image to your component's package.xml file:
 </dependencies>
 ```
 
-Usage
------
-
-The best documentation for PHP_Image are the unit tests, which are shipped in
-the package. You will find them installed into your PEAR repository, which on
-Linux systems is normally /usr/share/php/test.
-
 Development Environment
 -----------------------
 
