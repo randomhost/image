@@ -348,7 +348,7 @@ phix4componentdev:
 
 You can then clone the git repository:
 
-    # PHP_Webcam_Overlay
+    # PHP_Image
     git clone https://github.com/Random-Host/PHP_Image.git
 
 Then, install a local copy of this component's dependencies to complete the
