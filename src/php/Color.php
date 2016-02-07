@@ -1,30 +1,13 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
-/**
- * Color class definition
- *
- * PHP version 5
- *
- * @category  Image
- * @package   PHP_Image
- * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2014 random-host.com
- * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @link      https://pear.random-host.com/
- */
 namespace randomhost\Image;
 
 /**
  * Represents a color used in images.
  *
- * @category  Image
- * @package   PHP_Image
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2014 random-host.com
+ * @copyright 2016 random-host.com
  * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @version   Release: @package_version@
- * @link      https://pear.random-host.com/
+ * @link      http://php-image.random-host.com
  */
 class Color
 {
@@ -60,7 +43,7 @@ class Color
 
     /**
      * Constructor.
-     * 
+     *
      * @param int $red   Optional: Red component (0-255 or 0x00-0xFF).
      * @param int $green Optional: Green component (0-255 or 0x00-0xFF).
      * @param int $blue  Optional: Blue component (0-255 or 0x00-0xFF).
@@ -69,7 +52,7 @@ class Color
      * @throws \InvalidArgumentException Thrown if a color value or the alpha
      *                                   value is invalid.
      */
-    function __construct($red=0, $green=0, $blue=0, $alpha=0)
+    public function __construct($red = 0, $green = 0, $blue = 0, $alpha = 0)
     {
         $this->setRed($red);
         $this->setGreen($green);
@@ -89,7 +72,7 @@ class Color
     public function setRed($red)
     {
         self::validateColor($red);
-        
+
         $this->red = $red;
 
         return $this;
@@ -116,7 +99,7 @@ class Color
     public function setGreen($green)
     {
         self::validateColor($green);
-        
+
         $this->green = $green;
 
         return $this;
@@ -143,7 +126,7 @@ class Color
     public function setBlue($blue)
     {
         self::validateColor($blue);
-        
+
         $this->blue = $blue;
 
         return $this;
@@ -170,7 +153,7 @@ class Color
     public function setAlpha($alpha)
     {
         self::validateAlpha($alpha);
-        
+
         $this->alpha = $alpha;
 
         return $this;
@@ -220,9 +203,9 @@ class Color
         if (is_int($alpha) && 0 <= $alpha && 127 >= $alpha) {
             return true;
         }
-        
+
         throw new \InvalidArgumentException(
             'Alpha is expected to be an integer value between 0 and 127'
         );
     }
-} 
+}

@@ -1,0 +1,36 @@
+{
+    "name": "randomhost/image",
+    "type": "library",
+    "description": "Encapsulates common GD library operations in PHP classes.",
+    "keywords": [
+        "Image"
+    ],
+    "homepage": "https://www.random-host.com",
+    "version": "0.4.0",
+    "license": "New-BSD",
+    "authors": [
+        {
+            "name": "Ch'Ih-Yu",
+            "email": "chi-yu@web.de"
+        }
+    ],
+    "config": {
+        "platform": {
+            "php": "5.3.3"
+        }
+    },
+    "require": {
+        "php": ">=5.3.0",
+        "ext-gd": "*"
+    },
+    "require-dev": {
+        "behat/behat": "~2.0",
+        "phpunit/phpunit": "~4.0",
+        "phpspec/phpspec": "~2.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "randomhost\\Image\\": "src/php/"
+        }
+    }
+}

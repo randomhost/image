@@ -1,18 +1,4 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
-/**
- * Border class definition
- *
- * PHP version 5
- *
- * @category  Image
- * @package   PHP_Image
- * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2014 random-host.com
- * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @link      https://pear.random-host.com/
- */
 namespace randomhost\Image\Text\Decorator;
 
 use randomhost\Image;
@@ -20,13 +6,10 @@ use randomhost\Image;
 /**
  * Decorates a generic image overlay text with a colored border
  *
- * @category  Image
- * @package   PHP_Image
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2014 random-host.com
+ * @copyright 2016 random-host.com
  * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @version   Release: @package_version@
- * @link      https://pear.random-host.com/
+ * @link      http://php-image.random-host.com
  */
 class Border extends Generic implements Image\Text\Text
 {
@@ -47,13 +30,13 @@ class Border extends Generic implements Image\Text\Text
     public function setBorderColor(Image\Color $color)
     {
         $this->borderColor = $color;
-        
+
         return $this;
     }
 
     /**
      * Returns the border color used for rendering text overlay borders.
-     * 
+     *
      * @return null|\randomhost\Image\Color
      */
     public function getBorderColor()
@@ -128,9 +111,12 @@ class Border extends Generic implements Image\Text\Text
         parent::insertText($xPosition + 1, $yPosition, $text);
         parent::insertText($xPosition + 1, $yPosition + 1, $text);
 
+        // restore original border alpha transparency
+        $this->getBorderColor()->setAlpha($borderAlpha);
+
         // restore original text color for rendering the text
         $this->setTextColor($textColor);
 
         return $this;
     }
-} 
+}
