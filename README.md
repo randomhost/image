@@ -310,5 +310,5 @@ License
 See LICENSE.txt for full license details.
 
 
-[0]: https://travis-ci.org/randomhost/image.svg
+[0]: https://travis-ci.org/randomhost/image.svg?branch=master
 [1]: https://travis-ci.org/randomhost/image
