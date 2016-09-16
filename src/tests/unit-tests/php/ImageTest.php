@@ -1,30 +1,13 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
-/**
- * ImageTest unit test definition
- *
- * PHP version 5
- *
- * @category  Image
- * @package   PHP_Image
- * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2014 random-host.com
- * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @link      https://pear.random-host.com/
- */
 namespace randomhost\Image;
 
 /**
  * Unit test for Image
  *
- * @category  Image
- * @package   PHP_Image
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2014 random-host.com
+ * @copyright 2016 random-host.com
  * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @version   Release: @package_version@
- * @link      https://pear.random-host.com/
+ * @link      http://php-image.random-host.com
  */
 class ImageTest extends \PHPUnit_Framework_TestCase
 {
@@ -33,17 +16,17 @@ class ImageTest extends \PHPUnit_Framework_TestCase
      *
      * @var string
      */
-    const TEST_DATA_DIR = '../../testdata';
+    const TEST_DATA_DIR = '/testdata';
 
     /**
-     * Data provider for test image and associated mimetype values.
+     * Data provider for test image and associated mime type values.
      *
      * @return array
      */
     public function providerImageData()
     {
         return array(
-            // test image, mimetype, width, height
+            // test image, mime type, width, height
             array('test.gif', 'image/gif', 128, 128),
             array('test.jpg', 'image/jpeg', 128, 128),
             array('test.png', 'image/png', 128, 128),
@@ -63,10 +46,18 @@ class ImageTest extends \PHPUnit_Framework_TestCase
             array('test.jpg', 'test.png', Image::MERGE_SCALE_DST_NO_UPSCALE),
             array('test.jpg', 'test.png', Image::MERGE_SCALE_SRC),
             array('test.png', 'test_small.png', Image::MERGE_SCALE_DST),
-            array('test.png', 'test_small.png', Image::MERGE_SCALE_DST_NO_UPSCALE),
+            array(
+                'test.png',
+                'test_small.png',
+                Image::MERGE_SCALE_DST_NO_UPSCALE
+            ),
             array('test.png', 'test_small.png', Image::MERGE_SCALE_SRC),
             array('test_small.png', 'test.png', Image::MERGE_SCALE_DST),
-            array('test_small.png', 'test.png', Image::MERGE_SCALE_DST_NO_UPSCALE),
+            array(
+                'test_small.png',
+                'test.png',
+                Image::MERGE_SCALE_DST_NO_UPSCALE
+            ),
             array('test_small.png', 'test.png', Image::MERGE_SCALE_SRC),
         );
     }
@@ -162,7 +153,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException(
             '\RuntimeException',
-            'Couldn\'t read image at'
+            "Couldn't read image at"
         );
 
         Image::getInstanceByPath($imagePath);
@@ -179,7 +170,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException(
             '\RuntimeException',
-            'Couldn\'t read image at'
+            "Couldn't read image at"
         );
 
         Image::getInstanceByPath($imagePath);
@@ -494,7 +485,13 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInternalType('resource', $image->image);
 
-        $this->assertSame($image, $image->render());
+        ob_start();
+
+        $result = $image->render();
+        $imageData = ob_get_contents();
+        ob_end_clean();
+
+        $this->assertSame($image, $result);
     }
 
     /**
@@ -536,7 +533,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testGetMimetype($imageName, $mimeType)
+    public function testGetMimeType($imageName, $mimeType)
     {
         $imagePath = $this->getTestDataPath($imageName);
 
@@ -546,7 +543,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInternalType('resource', $image->image);
 
-        $this->assertSame($mimeType, $image->getMimetype());
+        $this->assertSame($mimeType, $image->getMimeType());
     }
 
     /**
@@ -643,7 +640,7 @@ class ImageTest extends \PHPUnit_Framework_TestCase
      */
     protected function getTestDataPath($fileName)
     {
-        $dir = __DIR__ . '/' . self::TEST_DATA_DIR;
+        $dir = APP_TESTDIR . self::TEST_DATA_DIR;
         if (!is_dir($dir) || !is_readable($dir)) {
             throw new \Exception(
                 sprintf(
@@ -666,4 +663,4 @@ class ImageTest extends \PHPUnit_Framework_TestCase
         return realpath($path);
     }
 }
- 
+

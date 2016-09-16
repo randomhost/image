@@ -1,30 +1,13 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
-/**
- * ColorTest unit test definition
- *
- * PHP version 5
- *
- * @category  Image
- * @package   PHP_Image
- * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2014 random-host.com
- * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @link      https://pear.random-host.com/
- */
 namespace randomhost\Image;
 
 /**
  * Unit test for Color
  *
- * @category  Image
- * @package   PHP_Image
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2014 random-host.com
+ * @copyright 2016 random-host.com
  * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @version   Release: @package_version@
- * @link      https://pear.random-host.com/
+ * @link      http://php-image.random-host.com
  */
 class ColorTest extends \PHPUnit_Framework_TestCase
 {
@@ -224,4 +207,4 @@ class ColorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(Color::validateAlpha($alpha));
     }
 }
- 
+

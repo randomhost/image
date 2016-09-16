@@ -1,18 +1,4 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
-/**
- * Image class definition
- *
- * PHP version 5
- *
- * @category  Image
- * @package   PHP_Image
- * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2014 random-host.com
- * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @link      https://pear.random-host.com/
- */
 namespace randomhost\Image;
 
 /**
@@ -20,13 +6,10 @@ namespace randomhost\Image;
  *
  * It supports merging other images into the image by passing in other Image objects.
  *
- * @category  Image
- * @package   PHP_Image
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2014 random-host.com
+ * @copyright 2016 random-host.com
  * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @version   Release: @package_version@
- * @link      https://pear.random-host.com/
+ * @link      http://php-image.random-host.com
  */
 class Image
 {
@@ -108,11 +91,11 @@ class Image
     protected $height = 0;
 
     /**
-     * Mimetype of the image
+     * Mime type of the image
      *
      * @var string
      */
-    protected $mimetype = '';
+    protected $mimeType = '';
 
     /**
      * Last modified timestamp of the image
@@ -196,11 +179,14 @@ class Image
      *
      * @return $this
      *
-     * @throws \RuntimeException Trown if $this->image or $srcImage->image is
+     * @throws \RuntimeException Thrown if $this->image or $srcImage->image is
      * not a valid image resource.
      */
     public function merge(
-        Image $srcImage, $dstX, $dstY, $strategy = self::MERGE_SCALE_SRC
+        Image $srcImage,
+        $dstX,
+        $dstY,
+        $strategy = self::MERGE_SCALE_SRC
     ) {
         if (!is_resource($this->image) || !is_resource($srcImage->image)) {
             throw new \RuntimeException(
@@ -210,36 +196,32 @@ class Image
 
         // determine re-sampling strategy
         switch ($strategy) {
+            // merge using the destination image dimensions
+            case self::MERGE_SCALE_DST:
+                $dstWidth = $this->width;
+                $dstHeight = $this->height;
 
-        // merge using the destination image dimensions
-        case self::MERGE_SCALE_DST:
+                break;
 
-            $dstWidth = $this->width;
-            $dstHeight = $this->height;
+            // merge using the destination image dimensions, do not upscale
+            case self::MERGE_SCALE_DST_NO_UPSCALE:
+                $dstWidth = $this->width;
+                if ($dstWidth > $srcImage->width) {
+                    $dstWidth = $srcImage->width;
+                }
 
-            break;
+                $dstHeight = $this->height;
+                if ($dstHeight > $srcImage->height) {
+                    $dstHeight = $srcImage->height;
+                }
 
-        // merge using the destination image dimensions, do not upscale
-        case self::MERGE_SCALE_DST_NO_UPSCALE:
+                break;
 
-            $dstWidth = $this->width;
-            if ($dstWidth > $srcImage->width) {
+            // merge using the source image dimensions
+            case self::MERGE_SCALE_SRC:
+            default:
                 $dstWidth = $srcImage->width;
-            }
-
-            $dstHeight = $this->height;
-            if ($dstHeight > $srcImage->height) {
                 $dstHeight = $srcImage->height;
-            }
-
-            break;
-
-        // merge using the source image dimensions
-        case self::MERGE_SCALE_SRC:
-        default:
-
-            $dstWidth = $srcImage->width;
-            $dstHeight = $srcImage->height;
         }
 
         // copy images around
@@ -262,7 +244,7 @@ class Image
     /**
      * Copies the given Image image stream into the image stream of the active
      * instance while applying the given alpha transparency.
-     * 
+     *
      * This method does not support scaling.
      *
      * @param Image $srcImage The source image.
@@ -276,7 +258,10 @@ class Image
      * not a valid image resource.
      */
     public function mergeAlpha(
-        Image $srcImage, $dstX, $dstY, $alpha = 127
+        Image $srcImage,
+        $dstX,
+        $dstY,
+        $alpha = 127
     ) {
         if (!is_resource($this->image) || !is_resource($srcImage->image)) {
             throw new \RuntimeException(
@@ -285,7 +270,7 @@ class Image
         }
 
         $percent = 100 - min(max(round(($alpha / 127 * 100)), 1), 100);
-        
+
         // copy images around
         @imagecopymerge(
             $this->image,
@@ -325,13 +310,13 @@ class Image
     }
 
     /**
-     * Returns the Mimetype of the image.
+     * Returns the mime type of the image.
      *
      * @return string
      */
-    public function getMimetype()
+    public function getMimeType()
     {
-        return (string) $this->mimetype;
+        return (string)$this->mimeType;
     }
 
     /**
@@ -341,7 +326,7 @@ class Image
      */
     public function getModified()
     {
-        return (int) $this->modified;
+        return (int)$this->modified;
     }
 
     /**
@@ -351,7 +336,7 @@ class Image
      */
     public function getWidth()
     {
-        return (int) $this->width;
+        return (int)$this->width;
     }
 
     /**
@@ -361,7 +346,7 @@ class Image
      */
     public function getHeight()
     {
-        return (int) $this->height;
+        return (int)$this->height;
     }
 
     /**
@@ -401,7 +386,7 @@ class Image
 
         $this->cacheDir = realpath($path);
     }
-    
+
     /**
      * Sets $this->pathCache based on the given $this->pathFile.
      *
@@ -450,7 +435,7 @@ class Image
         if (!$remoteFile) {
             throw new \RuntimeException(
                 sprintf(
-                    'Couldn\'t open file at %s',
+                    "Couldn't open file at %s",
                     $this->pathFile
                 )
             );
@@ -462,7 +447,7 @@ class Image
             fclose($remoteFile);
             throw new \RuntimeException(
                 sprintf(
-                    'Couldn\'t open cache file at %s',
+                    "Couldn't open cache file at %s",
                     $this->pathCache
                 )
             );
@@ -471,7 +456,9 @@ class Image
         // write file to cache
         while (!feof($remoteFile)) {
             fwrite(
-                $cacheFile, fread($remoteFile, $chunkSize), $chunkSize
+                $cacheFile,
+                fread($remoteFile, $chunkSize),
+                $chunkSize
             );
         }
 
@@ -497,7 +484,6 @@ class Image
 
         // handle caching
         if (!empty($this->pathCache)) {
-
             // write / refresh cache file if necessary
             if (!$this->isCached()) {
                 $this->writeCache();
@@ -515,7 +501,7 @@ class Image
         if (false === $read) {
             throw new \RuntimeException(
                 sprintf(
-                    'Couldn\'t read image at %s',
+                    "Couldn't read image at %s",
                     $path
                 )
             );
@@ -523,33 +509,32 @@ class Image
 
         // detect image type
         switch ($read[2]) {
+            case IMAGETYPE_GIF:
+                $this->image = @imagecreatefromgif($path);
+                break;
 
-        case IMAGETYPE_GIF:
-            $this->image = @imagecreatefromgif($path);
-            break;
+            case IMAGETYPE_JPEG:
+                $this->image = @imagecreatefromjpeg($path);
+                break;
 
-        case IMAGETYPE_JPEG:
-            $this->image = @imagecreatefromjpeg($path);
-            break;
+            case IMAGETYPE_PNG:
+                $this->image = @imagecreatefrompng($path);
+                break;
 
-        case IMAGETYPE_PNG:
-            $this->image = @imagecreatefrompng($path);
-            break;
-
-        default:
-            // image type not supported
-            throw new \UnexpectedValueException(
-                sprintf(
-                    'Image type %s not supported',
-                    image_type_to_mime_type($read[2])
-                )
-            );
+            default:
+                // image type not supported
+                throw new \UnexpectedValueException(
+                    sprintf(
+                        'Image type %s not supported',
+                        image_type_to_mime_type($read[2])
+                    )
+                );
         }
 
         if (false === $this->image) {
             throw new \RuntimeException(
                 sprintf(
-                    'Couldn\'t read image at %s',
+                    "Couldn't read image at %s",
                     $path
                 )
             );
@@ -559,8 +544,8 @@ class Image
         $this->width = $read[0];
         $this->height = $read[1];
 
-        // set mimetype
-        $this->mimetype = $read['mime'];
+        // set mime type
+        $this->mimeType = $read['mime'];
 
         // set modified date
         $this->modified = @filemtime($path);
@@ -576,8 +561,8 @@ class Image
         // create image
         $this->image = @imagecreatetruecolor($this->width, $this->height);
 
-        // set mimetype
-        $this->mimetype = 'image/png';
+        // set mime type
+        $this->mimeType = 'image/png';
 
         // set modified date
         $this->modified = time();

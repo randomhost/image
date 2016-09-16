@@ -1,18 +1,4 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
-/**
- * GenericTest unit test definition
- *
- * PHP version 5
- *
- * @category  Image
- * @package   PHP_Image
- * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2014 random-host.com
- * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @link      https://pear.random-host.com/
- */
 namespace randomhost\Image\Text\Decorator;
 
 use randomhost\Image\Image;
@@ -20,13 +6,10 @@ use randomhost\Image\Image;
 /**
  * Unit test for Generic
  *
- * @category  Image
- * @package   PHP_Image
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2014 random-host.com
+ * @copyright 2016 random-host.com
  * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @version   Release: @package_version@
- * @link      https://pear.random-host.com/
+ * @link      http://php-image.random-host.com
  */
 class GenericTest extends \PHPUnit_Framework_TestCase
 {
@@ -168,7 +151,7 @@ class GenericTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             'randomhost\\Image\\Text\\Text',
-            $generic, $generic->setTextSize($size)
+            $generic->setTextSize($size)
         );
 
         $this->assertSame($size, $generic->getTextSize());
@@ -242,7 +225,7 @@ class GenericTest extends \PHPUnit_Framework_TestCase
         // test values
         $existingMethod = 'setBorderColor';
         $missingMethod = 'doesNotExist';
-        
+
         // dependencies
         $textMock = $this->getMock('randomhost\\Image\\Text\\Generic');
         $borderMock = $this->getMock(
@@ -256,12 +239,12 @@ class GenericTest extends \PHPUnit_Framework_TestCase
             ->method('providesMethod')
             ->with($this->identicalTo($existingMethod))
             ->will($this->returnValue(true));
-        
+
         $borderMock->expects($this->at(1))
             ->method('providesMethod')
             ->with($this->identicalTo($missingMethod))
             ->will($this->returnValue(false));
-        
+
         // mock abstract class
         $generic = $this->getMockForAbstractClass(
             'randomhost\\Image\\Text\\Decorator\\Generic',
@@ -316,7 +299,7 @@ class GenericTest extends \PHPUnit_Framework_TestCase
     {
         // dependencies
         $textMock = $this->getMock('randomhost\\Image\\Text\\Generic');
-        
+
         // mock abstract class
         $generic = $this->getMockForAbstractClass(
             'randomhost\\Image\\Text\\Decorator\\Generic',
@@ -327,7 +310,7 @@ class GenericTest extends \PHPUnit_Framework_TestCase
             'PHPUnit_Framework_Error_Warning',
             'call_user_func_array() expects parameter 1 to be a valid callback'
         );
-        
+
         $generic->doesNotExist();
     }
 
@@ -342,4 +325,4 @@ class GenericTest extends \PHPUnit_Framework_TestCase
         return Image::getInstanceByCreate(100, 100);
     }
 }
- 
+

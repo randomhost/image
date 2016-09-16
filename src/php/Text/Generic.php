@@ -1,18 +1,4 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
-/**
- * Generic class definition
- *
- * PHP version 5
- *
- * @category  Image
- * @package   PHP_Image
- * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2014 random-host.com
- * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @link      https://pear.random-host.com/
- */
 namespace randomhost\Image\Text;
 
 use randomhost\Image;
@@ -22,13 +8,10 @@ use randomhost\Image;
  *
  * It supports rendering of text messages onto Image objects.
  *
- * @category  Image
- * @package   PHP_Image
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2014 random-host.com
+ * @copyright 2016 random-host.com
  * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @version   Release: @package_version@
- * @link      https://pear.random-host.com/
+ * @link      http://php-image.random-host.com
  */
 class Generic implements Text
 {
@@ -229,7 +212,7 @@ class Generic implements Text
                 )
             );
         }
-        
+
         $color = imagecolorallocatealpha(
             $this->getImage()->image,
             $this->textColor->getRed(),
@@ -237,7 +220,7 @@ class Generic implements Text
             $this->textColor->getBlue(),
             $this->textColor->getAlpha()
         );
-        
+
         imagettftext(
             $this->getImage()->image,
             $this->textSize,

@@ -1,18 +1,4 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
-/**
- * Generic class definition
- *
- * PHP version 5
- *
- * @category  Image
- * @package   PHP_Image
- * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2014 random-host.com
- * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @link      https://pear.random-host.com/
- */
 namespace randomhost\Image\Text\Decorator;
 
 use randomhost\Image;
@@ -20,13 +6,10 @@ use randomhost\Image;
 /**
  * Decorates a generic image overlay text with additional functionality
  *
- * @category  Image
- * @package   PHP_Image
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2014 random-host.com
+ * @copyright 2016 random-host.com
  * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @version   Release: @package_version@
- * @link      https://pear.random-host.com/
+ * @link      http://php-image.random-host.com
  */
 abstract class Generic implements Image\Text\Text
 {
@@ -158,7 +141,7 @@ abstract class Generic implements Image\Text\Text
 
     /**
      * Returns if the given method is implemented by one of the decorators.
-     * 
+     *
      * @param string $name Method name.
      *
      * @return bool
@@ -173,11 +156,11 @@ abstract class Generic implements Image\Text\Text
         }
         return false;
     }
-    
+
     /**
      * Passes calls to unknown methods to the decorated object as they might be
      * implemented by a preceding decorator.
-     * 
+     *
      * @param string $method Called method name.
      * @param array  $args   Method arguments.
      *
@@ -190,7 +173,7 @@ abstract class Generic implements Image\Text\Text
             $args
         );
     }
-    
+
     /**
      * Returns an Image\Image instance.
      *
@@ -206,4 +189,4 @@ abstract class Generic implements Image\Text\Text
             $height
         );
     }
-} 
+}

@@ -1,18 +1,4 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
-/**
- * BorderTest unit test definition
- *
- * PHP version 5
- *
- * @category  Image
- * @package   PHP_Image
- * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2014 random-host.com
- * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @link      https://pear.random-host.com/
- */
 namespace randomhost\Image\Text\Decorator;
 
 use randomhost\Image\Image;
@@ -20,13 +6,10 @@ use randomhost\Image\Image;
 /**
  * Unit test for Border
  *
- * @category  Image
- * @package   PHP_Image
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2014 random-host.com
+ * @copyright 2016 random-host.com
  * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @version   Release: @package_version@
- * @link      https://pear.random-host.com/
+ * @link      http://php-image.random-host.com
  */
 class BorderTest extends \PHPUnit_Framework_TestCase
 {
@@ -69,7 +52,7 @@ class BorderTest extends \PHPUnit_Framework_TestCase
          * complicated for now.
          */
         $image = Image::getInstanceByCreate(100, 100);
-        
+
         // mock dependencies
         $textMock = $this->getMock('randomhost\\Image\\Text\\Generic');
         $textColorMock = $this->getMock('randomhost\\Image\\Color');
@@ -174,7 +157,7 @@ class BorderTest extends \PHPUnit_Framework_TestCase
         $border = new Border($textMock);
 
         $border->setBorderColor($borderColorMock);
-        
+
         $this->assertSame(
             $border,
             $border->insertText($xPosition, $yPosition, $text)
@@ -190,15 +173,15 @@ class BorderTest extends \PHPUnit_Framework_TestCase
     {
         // mock dependencies
         $textMock = $this->getMock('randomhost\\Image\\Text\\Generic');
-        
+
         $border = new Border($textMock);
 
         $this->setExpectedException(
             '\RuntimeException',
             'Attempt to render text border without setting a color'
         );
-        
+
         $border->insertText(0, 0, '');
     }
 }
- 
+
