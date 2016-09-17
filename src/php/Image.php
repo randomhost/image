@@ -431,7 +431,18 @@ class Image
         $chunkSize = 1024 * 8;
 
         // open remote file
-        $remoteFile = @fopen($this->pathFile, 'rb');
+        $arrContextOptions=array(
+            "ssl"=>array(
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
+            ),
+        );
+        $remoteFile = fopen(
+            $this->pathFile,
+            'rb',
+            null,
+            stream_context_create($arrContextOptions)
+        );
         if (!$remoteFile) {
             throw new \RuntimeException(
                 sprintf(
