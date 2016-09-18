@@ -30,4 +30,3 @@
         <log type="testdox-text" target="review/testdox.txt"/>
     </logging>
 </phpunit>
-

@@ -7,7 +7,7 @@ namespace randomhost\Image;
  * @author    Ch'Ih-Yu <chi-yu@web.de>
  * @copyright 2016 random-host.com
  * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @link      http://php-image.random-host.com
+ * @link      http://github.random-host.com/image/
  */
 class ImageTest extends \PHPUnit_Framework_TestCase
 {
