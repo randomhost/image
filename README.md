@@ -80,70 +80,70 @@ merging other `Image` instances.
 
 There are two methods for creating an `Image` object instance:
 
-1. `Image::getInstanceByPath($path, $cacheDir = '')`
+1. `Image::getInstanceByPath($path, $cacheDir = '')`  
    Creates an instance from an existing local or remote image file.
-     - `$path`
+     - `$path`  
      Path or URL to the image file.
-     - `$cacheDir`
+     - `$cacheDir`  
      Optional: Directory path for caching image files.
      This comes in handy when retrieving images from remote locations as caching
      them locally reduces the amount of HTTP requests which have to be made.
-2. `Image::getInstanceByCreate($width, $height)`
+2. `Image::getInstanceByCreate($width, $height)`  
      Creates an empty instance with the given image dimensions which can be used
      to merge (multiple) other `Image` instances into it.
-     - `$width`
+     - `$width`  
      Width of the generated image.
-     - `$height`
+     - `$height`  
      Height of the generated image.
 
 #### Retrieving image data
 
 The following public methods for retrieving image related data are available:
 
-- `getMimetype()`
+- `getMimetype()`  
 Returns the Mimetype of the image.
 
-- `getModified()`
+- `getModified()`  
 Returns the last modified timestamp of the image. When working with an instance
 created with `getInstanceByCreate()`, this will be the time when the object was
 initially created.
 
-- `getWidth()`
+- `getWidth()`  
 Returns the width of the image in pixels.
 
-- `getHeight()`
+- `getHeight()`  
 Returns the height of the image in pixels.
 
 #### Combining images
 
-- `merge(Image $srcImage, $dstX, $dstY, $strategy = self::MERGE_SCALE_SRC)`
+- `merge(Image $srcImage, $dstX, $dstY, $strategy = self::MERGE_SCALE_SRC)`  
 Merges the image resource of the given `Image` instance into the image resource
 of the active `Image` instance using the given coordinates and scaling strategy.
 
-- `mergeAlpha(Image $srcImage, $dstX, $dstY, $alpha = 127)`
+- `mergeAlpha(Image $srcImage, $dstX, $dstY, $alpha = 127)`  
 Merges the image resource of the given `Image` instance into the image resource
 of the active `Image` instance using the given coordinates and alpha transparency.
 This method does not support scaling.
 
 #### Scaling strategies
 
-- `Image::MERGE_SCALE_SRC`
+- `Image::MERGE_SCALE_SRC`  
 This strategy uses width and height of the `Image` instance given to `merge()`.
 If the image to be merged exceeds the dimensions of the target instance, it is
 cropped to fit the dimensions of the target instance.
 
-- `Image::MERGE_SCALE_DST`
+- `Image::MERGE_SCALE_DST`  
 This strategy re-sizes the `Image` instance given to `merge()` to match the
 dimensions of the target instance. The x and y offset given to `merge()` will
 however not be respected so the image to be merged may still be cropped.
 
-- `Image::MERGE_SCALE_DST_NO_UPSCALE`
+- `Image::MERGE_SCALE_DST_NO_UPSCALE`  
 This strategy works similar to `Image::MERGE_SCALE_DST`, but does not upscale
 the image to be merged if it is smaller than the target instance.
 
 #### Rendering the image
 
-- `render()`
+- `render()`  
 Outputs the image stream to the browser. For now, images will always be rendered
 as `image/png` to allow for full alpha-transparency support. Support for other
 formats may be added in a later version.
@@ -158,55 +158,55 @@ for setting and retrieving color and alpha channel data.
 
 The constructor takes 4 parameters which are all optional:
 
-- `$red`
+- `$red`  
 Red component (0-255 or 0x00-0xFF).
 
-- `$green`
+- `$green`  
 Green component (0-255 or 0x00-0xFF).
 
-- `$blue`
+- `$blue`  
 Blue component (0-255 or 0x00-0xFF).
 
-- `$alpha`
+- `$alpha`  
 Alpha value (0-127)
 
 #### Configuring the color
 
-- `setRed($red)`
+- `setRed($red)`  
 Sets the red component (0-255 or 0x00-0xFF).
 
-- `setGreen($green)`
+- `setGreen($green)`  
 Sets the green component (0-255 or 0x00-0xFF).
 
-- `setBlue($blue)`
+- `setBlue($blue)`  
 Sets the blue component (0-255 or 0x00-0xFF).
 
-- `setAlpha($alpha)`
+- `setAlpha($alpha)`  
 Sets the alpha value (0-127). 0 indicates completely opaque while 127 indicates
 completely transparent.
 
 #### Retrieving color data
 
-- `getRed()`
+- `getRed()`  
 Returns the red component (0-255 or 0x00-0xFF).
 
-- `getGreen()`
+- `getGreen()`  
 Returns the green component (0-255 or 0x00-0xFF).
 
-- `getBlue()`
+- `getBlue()`  
 Returns the blue component (0-255 or 0x00-0xFF).
 
-- `getAlpha()`
+- `getAlpha()`  
 Returns the alpha value (0-127). 0 indicates completely opaque while 127
 indicates completely transparent.
 
 #### Validating color data
 
-- `Color::validateColor($color)`
+- `Color::validateColor($color)`  
 Validates the color value and throws an InvalidArgumentException if the value is
 invalid.
 
-- `Color::validateAlpha($alpha)`
+- `Color::validateAlpha($alpha)`  
 Validates the alpha value and throws an InvalidArgumentException if the value is
 invalid.
 
@@ -219,41 +219,41 @@ extended with additional functionality using decorators.
 
 The constructor takes 1 optional parameter:
 
-- `$image`
+- `$image`  
 An `Image` instance to operate on. This can also be set later using the
 `setImage()` method.
 
 #### Configuring the text
 
-- `setImage(Image\Image $image)`
+- `setImage(Image\Image $image)`  
 Sets the `Image` object instance.
 
-- `setTextColor(Image\Color $color)`
+- `setTextColor(Image\Color $color)`  
 Sets the `Color` used for rendering the text.
 
-- `setTextFont($path)`
+- `setTextFont($path)`  
 Sets the path to the font file used for rendering.
 
-- `setTextSize($size)`
+- `setTextSize($size)`  
 Sets the text size used for rendering.
 
 #### Retrieving text data
 
-- `getImage()`
+- `getImage()`  
 Returns the `Image` object instance.
 
-- `getTextColor()`
+- `getTextColor()`  
 Returns the `Color` used for rendering the text.
 
-- `getTextFont()`
+- `getTextFont()`  
 Returns the path to the font file used for rendering.
 
-- `getTextSize()`
+- `getTextSize()`  
 Returns the text size used for rendering.
 
 #### Rendering the text
 
-- `insertText($xPosition, $yPosition, $text)`
+- `insertText($xPosition, $yPosition, $text)`  
 Renders the given text onto the image resource, using the given coordinates.
 
 ### The Image/Text/Decorator object family
@@ -271,12 +271,12 @@ object and might also define their own.
 The constructor depends on the specific `Image/Text/Decorator` implementation
 but usually takes at least one parameter which is the object to decorate:
 
-- `$text`
+- `$text`  
 An `Image\Text\Text` implementation to decorate.
 
 #### Retrieving text decorator data
 
-- `providesMethod($name)`
+- `providesMethod($name)`  
 Returns if the given method is implemented by one of the decorators in the
 object tree as decorators can be stacked.
 
@@ -286,7 +286,7 @@ Since all decorators implement the same interface as the standard
 `Image/Text/Generic` object, rendering using decorated text objects works the
 same way as rendering using non-decorated objects:
 
-- `insertText($xPosition, $yPosition, $text)`
+- `insertText($xPosition, $yPosition, $text)`  
 Renders the given text onto the image resource, using the given coordinates.
 
 ### The Image/Text/Decorator/Border object
@@ -296,12 +296,12 @@ objects which adds a simple border to the rendered text.
 
 #### Configuring the border
 
-- `setBorderColor(Image\Color $color)`
+- `setBorderColor(Image\Color $color)`  
 Sets the `Color` used for rendering the border.
 
 #### Retrieving border data
 
-- `getBorderColor()`
+- `getBorderColor()`  
 Returns the `Color` used for rendering the border.
 
 License
