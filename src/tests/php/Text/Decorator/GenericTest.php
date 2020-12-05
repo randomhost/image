@@ -1,47 +1,61 @@
 <?php
-namespace randomhost\Image\Text\Decorator;
 
+declare(strict_types=1);
+
+namespace randomhost\Image\Tests\Text\Decorator;
+
+use PHPUnit\Framework\TestCase;
+use randomhost\Image\Color;
 use randomhost\Image\Image;
+use randomhost\Image\Text\Decorator\Border;
+use randomhost\Image\Text\Decorator\Generic as GenericDecorator;
+use randomhost\Image\Text\Generic as GenericText;
+use randomhost\Image\Text\Text;
 
 /**
- * Unit test for Generic
+ * Unit test for {@see GenericDecorator}.
  *
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2016 random-host.com
- * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @link      http://github.random-host.com/image/
+ * @copyright 2022 Random-Host.tv
+ * @license   https://opensource.org/licenses/BSD-3-Clause BSD License (3 Clause)
+ *
+ * @see https://github.random-host.tv
+ *
+ * @internal
+ *
+ * @covers \randomhost\Image\Text\Decorator\Generic
  */
-class GenericTest extends \PHPUnit_Framework_TestCase
+class GenericTest extends TestCase
 {
     /**
-     * Tests Generic::setImage() and Generic::getImage().
-     *
-     * @return void
+     * Tests {@see Generic::setImage()} and {@see Generic::getImage()}.
      */
     public function testSetGetImage()
     {
         // dependencies
         $image = $this->getImageInstance();
-        $textMock = $this->getMock('randomhost\\Image\\Text\\Generic');
+        $textMock = $this->createMock(GenericText::class);
 
         // configure mock objects
         $textMock->expects($this->once())
             ->method('setImage')
             ->with($this->identicalTo($image))
-            ->will($this->returnSelf());
+            ->will($this->returnSelf())
+        ;
 
         $textMock->expects($this->once())
             ->method('getImage')
-            ->will($this->returnValue($image));
+            ->will($this->returnValue($image))
+        ;
 
         // mock abstract class
         $generic = $this->getMockForAbstractClass(
-            'randomhost\\Image\\Text\\Decorator\\Generic',
-            array($textMock)
+            GenericDecorator::class,
+            [$textMock]
         );
 
         $this->assertInstanceOf(
-            'randomhost\\Image\\Text\\Text',
+            Text::class,
             $generic->setImage($image)
         );
 
@@ -49,34 +63,34 @@ class GenericTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Generic::setTextColor() and Generic::getTextColor().
-     *
-     * @return void
+     * Tests {@see Generic::setTextColor()} and {@see Generic::getTextColor()}.
      */
     public function testSetGetTextColor()
     {
         // dependencies
-        $textMock = $this->getMock('randomhost\\Image\\Text\\Generic');
-        $colorMock = $this->getMock('randomhost\\Image\\Color');
+        $textMock = $this->createMock(GenericText::class);
+        $colorMock = $this->createMock(Color::class);
 
         // configure mock objects
         $textMock->expects($this->once())
             ->method('setTextColor')
             ->with($this->identicalTo($colorMock))
-            ->will($this->returnSelf());
+            ->will($this->returnSelf())
+        ;
 
         $textMock->expects($this->once())
             ->method('getTextColor')
-            ->will($this->returnValue($colorMock));
+            ->will($this->returnValue($colorMock))
+        ;
 
         // mock abstract class
         $generic = $this->getMockForAbstractClass(
-            'randomhost\\Image\\Text\\Decorator\\Generic',
-            array($textMock)
+            GenericDecorator::class,
+            [$textMock]
         );
 
         $this->assertInstanceOf(
-            'randomhost\\Image\\Text\\Text',
+            Text::class,
             $generic->setTextColor($colorMock)
         );
 
@@ -84,9 +98,7 @@ class GenericTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Generic::setTextFont() and Generic::getTextFont().
-     *
-     * @return void
+     * Tests {@see Generic::setTextFont()} and {@see Generic::getTextFont()}.
      */
     public function testSetGetTextFont()
     {
@@ -94,26 +106,28 @@ class GenericTest extends \PHPUnit_Framework_TestCase
         $font = '/path/to/font.ttf';
 
         // dependencies
-        $textMock = $this->getMock('randomhost\\Image\\Text\\Generic');
+        $textMock = $this->createMock(GenericText::class);
 
         // configure mock objects
         $textMock->expects($this->once())
             ->method('setTextFont')
             ->with($this->identicalTo($font))
-            ->will($this->returnSelf());
+            ->will($this->returnSelf())
+        ;
 
         $textMock->expects($this->once())
             ->method('getTextFont')
-            ->will($this->returnValue($font));
+            ->will($this->returnValue($font))
+        ;
 
         // mock abstract class
         $generic = $this->getMockForAbstractClass(
-            'randomhost\\Image\\Text\\Decorator\\Generic',
-            array($textMock)
+            GenericDecorator::class,
+            [$textMock]
         );
 
         $this->assertInstanceOf(
-            'randomhost\\Image\\Text\\Text',
+            Text::class,
             $generic->setTextFont($font)
         );
 
@@ -121,36 +135,36 @@ class GenericTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Generic::setTextSize() and Generic::getTextSize().
-     *
-     * @return void
+     * Tests {@see Generic::setTextSize()} and {@see Generic::getTextSize()}.
      */
     public function testSetGetTextSize()
     {
         // test value
-        $size = 14;
+        $size = 14.0;
 
         // dependencies
-        $textMock = $this->getMock('randomhost\\Image\\Text\\Generic');
+        $textMock = $this->createMock(GenericText::class);
 
         // configure mock objects
         $textMock->expects($this->once())
             ->method('setTextSize')
             ->with($this->identicalTo($size))
-            ->will($this->returnSelf());
+            ->will($this->returnSelf())
+        ;
 
         $textMock->expects($this->once())
             ->method('getTextSize')
-            ->will($this->returnValue($size));
+            ->will($this->returnValue($size))
+        ;
 
         // mock abstract class
         $generic = $this->getMockForAbstractClass(
-            'randomhost\\Image\\Text\\Decorator\\Generic',
-            array($textMock)
+            GenericDecorator::class,
+            [$textMock]
         );
 
         $this->assertInstanceOf(
-            'randomhost\\Image\\Text\\Text',
+            Text::class,
             $generic->setTextSize($size)
         );
 
@@ -158,9 +172,7 @@ class GenericTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Generic::insertText().
-     *
-     * @return void
+     * Tests {@see Generic::insertText()}.
      */
     public function testInsertText()
     {
@@ -170,7 +182,7 @@ class GenericTest extends \PHPUnit_Framework_TestCase
         $text = 'test';
 
         // dependencies
-        $textMock = $this->getMock('randomhost\\Image\\Text\\Generic');
+        $textMock = $this->createMock(GenericText::class);
 
         // configure mock objects
         $textMock->expects($this->once())
@@ -180,34 +192,33 @@ class GenericTest extends \PHPUnit_Framework_TestCase
                 $this->identicalTo($yPosition),
                 $this->identicalTo($text)
             )
-            ->will($this->returnSelf());
+            ->will($this->returnSelf())
+        ;
 
         // mock abstract class
         $generic = $this->getMockForAbstractClass(
-            'randomhost\\Image\\Text\\Decorator\\Generic',
-            array($textMock)
+            GenericDecorator::class,
+            [$textMock]
         );
 
         $this->assertInstanceOf(
-            'randomhost\\Image\\Text\\Text',
+            Text::class,
             $generic->insertText($xPosition, $yPosition, $text)
         );
     }
 
     /**
-     * Tests Generic::providesMethod().
-     *
-     * @return void
+     * Tests {@see Generic::providesMethod()}.
      */
     public function testProvidesMethod()
     {
         // dependencies
-        $textMock = $this->getMock('randomhost\\Image\\Text\\Generic');
+        $textMock = $this->createMock(GenericText::class);
 
         // mock abstract class
         $generic = $this->getMockForAbstractClass(
-            'randomhost\\Image\\Text\\Decorator\\Generic',
-            array($textMock)
+            GenericDecorator::class,
+            [$textMock]
         );
 
         $this->assertTrue($generic->providesMethod('insertText'));
@@ -216,9 +227,7 @@ class GenericTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Generic::providesMethod() with a tree of decorators.
-     *
-     * @return void
+     * Tests {@see Generic::providesMethod()} with a tree of decorators.
      */
     public function testProvidesMethodWithDecoratorTree()
     {
@@ -227,28 +236,30 @@ class GenericTest extends \PHPUnit_Framework_TestCase
         $missingMethod = 'doesNotExist';
 
         // dependencies
-        $textMock = $this->getMock('randomhost\\Image\\Text\\Generic');
-        $borderMock = $this->getMock(
-            'randomhost\\Image\\Text\\Decorator\\Border',
-            array(),
-            array($textMock)
-        );
+        $textMock = $this->createMock(GenericText::class);
+        $borderMock = $this
+            ->getMockBuilder(Border::class)
+            ->setConstructorArgs([$textMock])
+            ->getMock()
+        ;
 
         // configure mock objects
-        $borderMock->expects($this->at(0))
+        $borderMock->expects($this->exactly(2))
             ->method('providesMethod')
-            ->with($this->identicalTo($existingMethod))
-            ->will($this->returnValue(true));
-
-        $borderMock->expects($this->at(1))
-            ->method('providesMethod')
-            ->with($this->identicalTo($missingMethod))
-            ->will($this->returnValue(false));
+            ->withConsecutive(
+                [$this->identicalTo($existingMethod)],
+                [$this->identicalTo($missingMethod)]
+            )
+            ->willReturnOnConsecutiveCalls(
+                $this->returnValue(true),
+                $this->returnValue(false)
+            )
+        ;
 
         // mock abstract class
         $generic = $this->getMockForAbstractClass(
-            'randomhost\\Image\\Text\\Decorator\\Generic',
-            array($borderMock)
+            GenericDecorator::class,
+            [$borderMock]
         );
 
         $this->assertTrue($generic->providesMethod('setBorderColor'));
@@ -257,72 +268,65 @@ class GenericTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Tests Generic::__call() with a tree of decorators.
-     *
-     * @return void
+     * Tests {@see Generic::__call()} with a tree of decorators.
      */
     public function testCallWithDecoratorTree()
     {
         // dependencies
-        $textMock = $this->getMock('randomhost\\Image\\Text\\Generic');
-        $borderMock = $this->getMock(
-            'randomhost\\Image\\Text\\Decorator\\Border',
-            array(),
-            array($textMock)
-        );
-        $colorMock = $this->getMock('randomhost\\Image\\Color');
+        $textMock = $this->createMock(GenericText::class);
+        $borderMock = $this
+            ->getMockBuilder(Border::class)
+            ->setConstructorArgs([$textMock])
+            ->getMock()
+        ;
+        $colorMock = $this->createMock(Color::class);
 
         // configure mock objects
-        $borderMock->expects($this->at(0))
+        $borderMock->expects($this->once())
             ->method('setBorderColor')
             ->with($this->identicalTo($colorMock))
-            ->will($this->returnSelf());
+            ->will($this->returnSelf())
+        ;
 
         // mock abstract class
         $generic = $this->getMockForAbstractClass(
-            'randomhost\\Image\\Text\\Decorator\\Generic',
-            array($borderMock)
+            GenericDecorator::class,
+            [$borderMock]
         );
 
         $this->assertInstanceOf(
-            'randomhost\\Image\\Text\\Text',
+            Text::class,
             $generic->setBorderColor($colorMock)
         );
     }
 
     /**
-     * Tests Generic::__call() with an undefined method.
-     *
-     * @return void
+     * Tests {@see Generic::__call()} with an undefined method.
      */
     public function testCallUndefinedMethod()
     {
         // dependencies
-        $textMock = $this->getMock('randomhost\\Image\\Text\\Generic');
+        $textMock = $this->createMock(GenericText::class);
 
         // mock abstract class
         $generic = $this->getMockForAbstractClass(
-            'randomhost\\Image\\Text\\Decorator\\Generic',
-            array($textMock)
+            GenericDecorator::class,
+            [$textMock]
         );
 
-        $this->setExpectedException(
-            'PHPUnit_Framework_Error_Warning',
-            'call_user_func_array() expects parameter 1 to be a valid callback'
-        );
+        $this->expectException(\BadMethodCallException::class);
+        $this->expectExceptionMessage('Failed to call');
 
+        /** @noinspection PhpUndefinedMethodInspection */
         $generic->doesNotExist();
     }
 
     /**
      * Returns a real image object as mocking this is a little too complicated
      * for now.
-     *
-     * @return Image
      */
-    protected function getImageInstance()
+    protected function getImageInstance(): Image
     {
         return Image::getInstanceByCreate(100, 100);
     }
 }
-

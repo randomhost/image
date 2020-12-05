@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace randomhost\Image;
 
 /**
@@ -7,98 +10,99 @@ namespace randomhost\Image;
  * It supports merging other images into the image by passing in other Image objects.
  *
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2016 random-host.com
- * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @link      http://github.random-host.com/image/
+ * @copyright 2022 Random-Host.tv
+ * @license   https://opensource.org/licenses/BSD-3-Clause BSD License (3 Clause)
+ *
+ * @see https://github.random-host.tv
  */
 class Image
 {
     /**
-     * Image cache time in minutes
+     * Merge images using the source image size.
      *
      * @var int
      */
-    const CACHE_TIME = 60;
+    public const MERGE_SCALE_SRC = 1;
 
     /**
-     * Merge images using the source image size
+     * Merge images using the destination image size.
      *
      * @var int
      */
-    const MERGE_SCALE_SRC = 1;
+    public const MERGE_SCALE_DST = 2;
 
     /**
-     * Merge images using the destination image size
+     * Merge images using the destination image size, do not upscale.
      *
      * @var int
      */
-    const MERGE_SCALE_DST = 2;
+    public const MERGE_SCALE_DST_NO_UPSCALE = 3;
 
     /**
-     * Merge images using the destination image size, do not upscale
+     * Image cache time in minutes.
      *
      * @var int
      */
-    const MERGE_SCALE_DST_NO_UPSCALE = 3;
+    private const CACHE_TIME = 60;
 
     /**
-     * Image resource identifier
+     * Image resource identifier.
      *
      * @var resource
      */
     public $image = false;
 
     /**
-     * Timestamp at call time
+     * Timestamp at call time.
      *
      * @var int
      */
     protected $time;
 
     /**
-     * File system path for image caching
+     * File system path for image caching.
      *
      * @var string
      */
     protected $cacheDir = '';
 
     /**
-     * Local path or remote URL of the image file
+     * Local path or remote URL of the image file.
      *
      * @var string
      */
     protected $pathFile = '';
 
     /**
-     * Local cache path of the image file
+     * Local cache path of the image file.
      *
      * @var string
      */
     protected $pathCache = '';
 
     /**
-     * Width of the image in pixels
+     * Width of the image in pixels.
      *
      * @var int
      */
     protected $width = 0;
 
     /**
-     * Height of the image in pixels
+     * Height of the image in pixels.
      *
      * @var int
      */
     protected $height = 0;
 
     /**
-     * Mime type of the image
+     * Mime type of the image.
      *
      * @var string
      */
     protected $mimeType = '';
 
     /**
-     * Last modified timestamp of the image
+     * Last modified timestamp of the image.
      *
      * @var int
      */
@@ -113,14 +117,23 @@ class Image
     }
 
     /**
+     * Destructor for this class.
+     */
+    public function __destruct()
+    {
+        if (is_resource($this->image)) {
+            // free up memory
+            imagedestroy($this->image);
+        }
+    }
+
+    /**
      * Creates a new image from file or URL.
      *
      * @param string $path     Path to the image.
      * @param string $cacheDir Optional: Directory path for caching image files.
-     *
-     * @return $this
      */
-    public static function getInstanceByPath($path, $cacheDir = '')
+    public static function getInstanceByPath(string $path, string $cacheDir = ''): Image
     {
         $instance = new self();
 
@@ -141,31 +154,18 @@ class Image
      *
      * @param int $width  Image width.
      * @param int $height Image height.
-     *
-     * @return $this
      */
-    public static function getInstanceByCreate($width, $height)
+    public static function getInstanceByCreate(int $width, int $height): Image
     {
         $instance = new self();
 
         // set image dimensions
-        $instance->width = (int)$width;
-        $instance->height = (int)$height;
+        $instance->width = (int) $width;
+        $instance->height = (int) $height;
 
         $instance->createImage();
 
         return $instance;
-    }
-
-    /**
-     * Destructor for this class.
-     */
-    public function __destruct()
-    {
-        if (is_resource($this->image)) {
-            // free up memory
-            imagedestroy($this->image);
-        }
     }
 
     /**
@@ -177,17 +177,15 @@ class Image
      * @param int   $dstY     y-coordinate of destination point.
      * @param int   $strategy Scaling strategy. Default: self::MERGE_SCALE_SRC
      *
-     * @return $this
-     *
      * @throws \RuntimeException Thrown if $this->image or $srcImage->image is
-     * not a valid image resource.
+     *                           not a valid image resource.
      */
     public function merge(
         Image $srcImage,
-        $dstX,
-        $dstY,
-        $strategy = self::MERGE_SCALE_SRC
-    ) {
+        int $dstX,
+        int $dstY,
+        int $strategy = self::MERGE_SCALE_SRC
+    ): Image {
         if (!is_resource($this->image) || !is_resource($srcImage->image)) {
             throw new \RuntimeException(
                 'Attempt to merge image data using an invalid image resource.'
@@ -202,8 +200,7 @@ class Image
                 $dstHeight = $this->height;
 
                 break;
-
-            // merge using the destination image dimensions, do not upscale
+                // merge using the destination image dimensions, do not upscale
             case self::MERGE_SCALE_DST_NO_UPSCALE:
                 $dstWidth = $this->width;
                 if ($dstWidth > $srcImage->width) {
@@ -216,8 +213,7 @@ class Image
                 }
 
                 break;
-
-            // merge using the source image dimensions
+                // merge using the source image dimensions
             case self::MERGE_SCALE_SRC:
             default:
                 $dstWidth = $srcImage->width;
@@ -228,12 +224,12 @@ class Image
         @imagecopyresampled(
             $this->image,
             $srcImage->image,
-            (int)$dstX,
-            (int)$dstY,
+            (int) $dstX,
+            (int) $dstY,
             0,
             0,
-            (int)$dstWidth,
-            (int)$dstHeight,
+            (int) $dstWidth,
+            (int) $dstHeight,
             $srcImage->width,
             $srcImage->height
         );
@@ -252,31 +248,29 @@ class Image
      * @param int   $dstY     y-coordinate of destination point.
      * @param int   $alpha    Alpha value (0-127)
      *
-     * @return $this
-     *
      * @throws \RuntimeException Thrown if $this->image or $srcImage->image is
-     * not a valid image resource.
+     *                           not a valid image resource.
      */
     public function mergeAlpha(
         Image $srcImage,
-        $dstX,
-        $dstY,
-        $alpha = 127
-    ) {
+        int $dstX,
+        int $dstY,
+        int $alpha = 127
+    ): Image {
         if (!is_resource($this->image) || !is_resource($srcImage->image)) {
             throw new \RuntimeException(
                 'Attempt to merge image data using an invalid image resource.'
             );
         }
 
-        $percent = 100 - min(max(round(($alpha / 127 * 100)), 1), 100);
+        $percent = (int) (100 - min(max(round($alpha / 127 * 100), 1), 100));
 
         // copy images around
         @imagecopymerge(
             $this->image,
             $srcImage->image,
-            (int)$dstX,
-            (int)$dstY,
+            (int) $dstX,
+            (int) $dstY,
             0,
             0,
             $srcImage->width,
@@ -290,12 +284,10 @@ class Image
     /**
      * Outputs the image stream to the browser.
      *
-     * @return $this
-     *
      * @throws \RuntimeException Thrown if $this->image is not a valid image
      *                           resource.
      */
-    public function render()
+    public function render(): Image
     {
         if (!is_resource($this->image)) {
             throw new \RuntimeException(
@@ -311,42 +303,34 @@ class Image
 
     /**
      * Returns the mime type of the image.
-     *
-     * @return string
      */
-    public function getMimeType()
+    public function getMimeType(): string
     {
-        return (string)$this->mimeType;
+        return (string) $this->mimeType;
     }
 
     /**
      * Returns the last modified timestamp of the image.
-     *
-     * @return int
      */
-    public function getModified()
+    public function getModified(): int
     {
-        return (int)$this->modified;
+        return (int) $this->modified;
     }
 
     /**
      * Returns the width of the image in pixels.
-     *
-     * @return int
      */
-    public function getWidth()
+    public function getWidth(): int
     {
-        return (int)$this->width;
+        return (int) $this->width;
     }
 
     /**
      * Returns the height of the image in pixels.
-     *
-     * @return int
      */
-    public function getHeight()
+    public function getHeight(): int
     {
-        return (int)$this->height;
+        return (int) $this->height;
     }
 
     /**
@@ -354,10 +338,9 @@ class Image
      *
      * @param string $path Path to cache directory
      *
-     * @return void
      * @throws \InvalidArgumentException
      */
-    protected function setCacheDir($path)
+    protected function setCacheDir(string $path): void
     {
         if (!is_dir($path)) {
             throw new \InvalidArgumentException(
@@ -389,22 +372,18 @@ class Image
 
     /**
      * Sets $this->pathCache based on the given $this->pathFile.
-     *
-     * @return void
      */
-    protected function setCachePath()
+    protected function setCachePath(): void
     {
         $filename = basename($this->pathFile);
 
-        $this->pathCache = $this->cacheDir . '/' . $filename;
+        $this->pathCache = $this->cacheDir.'/'.$filename;
     }
 
     /**
      * Checks if the image file exists in the cache.
-     *
-     * @return bool
      */
-    protected function isCached()
+    protected function isCached(): bool
     {
         $cacheTime = self::CACHE_TIME * 60;
 
@@ -422,25 +401,23 @@ class Image
      * Attempts to write the image file located at $this->pathFile to a local
      * file at $this->pathCache.
      *
-     * @return void
-     *
      * @throws \RuntimeException Thrown if the cache file could not be written.
      */
-    protected function writeCache()
+    protected function writeCache(): void
     {
         $chunkSize = 1024 * 8;
 
         // open remote file
-        $arrContextOptions = array(
-            "ssl" => array(
-                "verify_peer" => false,
-                "verify_peer_name" => false,
-            ),
-        );
+        $arrContextOptions = [
+            'ssl' => [
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+            ],
+        ];
         $remoteFile = fopen(
             $this->pathFile,
             'rb',
-            null,
+            false,
             stream_context_create($arrContextOptions)
         );
         if (!$remoteFile) {
@@ -456,6 +433,7 @@ class Image
         $cacheFile = fopen($this->pathCache, 'wb');
         if (!$cacheFile) {
             fclose($remoteFile);
+
             throw new \RuntimeException(
                 sprintf(
                     "Couldn't open cache file at %s",
@@ -483,12 +461,10 @@ class Image
     /**
      * Reads the image file.
      *
-     * @return void
-     *
-     * @throws \RuntimeException Thrown if the image could not be processed.
+     * @throws \RuntimeException         Thrown if the image could not be processed.
      * @throws \UnexpectedValueException Thrown if the image type is not supported.
      */
-    protected function readImage()
+    protected function readImage(): void
     {
         // set default path
         $path = $this->pathFile;
@@ -504,7 +480,6 @@ class Image
             if ($this->isCached()) {
                 $path = $this->pathCache;
             }
-
         }
 
         // get image information
@@ -522,14 +497,17 @@ class Image
         switch ($read[2]) {
             case IMAGETYPE_GIF:
                 $this->image = @imagecreatefromgif($path);
+
                 break;
 
             case IMAGETYPE_JPEG:
                 $this->image = @imagecreatefromjpeg($path);
+
                 break;
 
             case IMAGETYPE_PNG:
                 $this->image = @imagecreatefrompng($path);
+
                 break;
 
             default:
@@ -564,10 +542,8 @@ class Image
 
     /**
      * Creates a new true color image.
-     *
-     * @return void
      */
-    protected function createImage()
+    protected function createImage(): void
     {
         // create image
         $this->image = @imagecreatetruecolor($this->width, $this->height);

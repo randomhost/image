@@ -1,7 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
 namespace randomhost\Image\Text;
 
-use randomhost\Image;
+use randomhost\Image\Color;
+use randomhost\Image\Image;
 
 /**
  * This class represents a generic image overlay text.
@@ -9,28 +13,29 @@ use randomhost\Image;
  * It supports rendering of text messages onto Image objects.
  *
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2016 random-host.com
- * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @link      http://github.random-host.com/image/
+ * @copyright 2022 Random-Host.tv
+ * @license   https://opensource.org/licenses/BSD-3-Clause BSD License (3 Clause)
+ *
+ * @see https://github.random-host.tv
  */
 class Generic implements Text
 {
     /**
-     * Image object instance
+     * Image object instance.
      *
-     * @var Image\Image
+     * @var Image
      */
-    protected $image = null;
+    protected $image;
 
     /**
-     * Text size for rendering text overlays onto the image
+     * Text size for rendering text overlays onto the image.
      *
      * @var float
      */
     protected $textSize = 7.0;
 
     /**
-     * Text angle for rendering text overlays onto the image
+     * Text angle for rendering text overlays onto the image.
      *
      * @var float
      */
@@ -39,12 +44,12 @@ class Generic implements Text
     /**
      * Text color identifier.
      *
-     * @var Image\Color|null
+     * @var null|Color
      */
-    protected $textColor = null;
+    protected $textColor;
 
     /**
-     * Path to the font file used for rendering text overlays onto the image
+     * Path to the font file used for rendering text overlays onto the image.
      *
      * @var string
      */
@@ -53,9 +58,9 @@ class Generic implements Text
     /**
      * Constructor for this class.
      *
-     * @param Image\Image $image Optional: randomhost\Image\Image instance.
+     * @param Image $image Optional: randomhost\Image instance.
      */
-    public function __construct(Image\Image $image = null)
+    public function __construct(Image $image = null)
     {
         $this->image = $image;
     }
@@ -63,11 +68,9 @@ class Generic implements Text
     /**
      * Sets the Image object instance.
      *
-     * @param Image\Image $image randomhost\Image\Image instance.
-     *
-     * @return $this
+     * @param Image $image Image object instance.
      */
-    public function setImage(Image\Image $image)
+    public function setImage(Image $image): Text
     {
         $this->image = $image;
 
@@ -76,10 +79,8 @@ class Generic implements Text
 
     /**
      * Returns the Image object instance.
-     *
-     * @return Image\Image
      */
-    public function getImage()
+    public function getImage(): ?Image
     {
         return $this->image;
     }
@@ -87,11 +88,9 @@ class Generic implements Text
     /**
      * Sets the text color used for rendering text overlays onto the image.
      *
-     * @param Image\Color $color Color object instance.
-     *
-     * @return $this
+     * @param Color $color Color object instance.
      */
-    public function setTextColor(Image\Color $color)
+    public function setTextColor(Color $color): Text
     {
         $this->textColor = $color;
 
@@ -100,10 +99,8 @@ class Generic implements Text
 
     /**
      * Returns the text color used for rendering text overlays onto the image.
-     *
-     * @return Image\Color|null
      */
-    public function getTextColor()
+    public function getTextColor(): ?Color
     {
         return $this->textColor;
     }
@@ -114,15 +111,13 @@ class Generic implements Text
      *
      * @param string $path File system path to TTF font file to be used.
      *
-     * @return $this
-     *
      * @throws \InvalidArgumentException Thrown if the font file could not be loaded.
      */
-    public function setTextFont($path)
+    public function setTextFont(string $path): Text
     {
         if (!is_file($path) || !is_readable($path)) {
             throw new \InvalidArgumentException(
-                'Unable to load font file at ' . $path
+                'Unable to load font file at '.$path
             );
         }
 
@@ -134,10 +129,8 @@ class Generic implements Text
     /**
      * Returns the path to the font file used for rendering text overlays onto
      * the image.
-     *
-     * @return string
      */
-    public function getTextFont()
+    public function getTextFont(): string
     {
         return $this->textFontPath;
     }
@@ -146,22 +139,18 @@ class Generic implements Text
      * Sets the text size used for rendering text overlays onto the image.
      *
      * @param float $size Font size.
-     *
-     * @return $this;
      */
-    public function setTextSize($size)
+    public function setTextSize(float $size): Text
     {
-        $this->textSize = (float)$size;
+        $this->textSize = (float) $size;
 
         return $this;
     }
 
     /**
      * Returns the text size used for rendering text overlays onto the image.
-     *
-     * @return float
      */
-    public function getTextSize()
+    public function getTextSize(): float
     {
         return $this->textSize;
     }
@@ -173,14 +162,12 @@ class Generic implements Text
      * @param int    $yPosition The y-ordinate position of the fonts baseline.
      * @param string $text      The text string in UTF-8 encoding.
      *
-     * @return $this;
-     *
      * @throws \RuntimeException Thrown if $this->image is not a valid image
      *                           resource or the font file isn't set.
      */
-    public function insertText($xPosition, $yPosition, $text)
+    public function insertText(int $xPosition, int $yPosition, string $text): Text
     {
-        if (!$this->getImage() instanceof Image\Image
+        if (!$this->getImage() instanceof Image
             || !is_resource($this->getImage()->image)
         ) {
             throw new \RuntimeException(
@@ -188,7 +175,7 @@ class Generic implements Text
             );
         }
 
-        if (!$this->textColor instanceof Image\Color) {
+        if (!$this->textColor instanceof Color) {
             throw new \RuntimeException(
                 'Attempt to render text without setting a color'
             );
