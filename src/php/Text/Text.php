@@ -1,49 +1,46 @@
 <?php
+
+declare(strict_types=1);
+
 namespace randomhost\Image\Text;
 
-use randomhost\Image;
+use randomhost\Image\Color;
+use randomhost\Image\Image;
 
 /**
  * Interface for rendering text messages onto Image objects.
  *
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2016 random-host.com
- * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @link      http://github.random-host.com/image/
+ * @copyright 2022 Random-Host.tv
+ * @license   https://opensource.org/licenses/BSD-3-Clause BSD License (3 Clause)
+ *
+ * @see https://github.random-host.tv
  */
 interface Text
 {
     /**
      * Sets the Image object instance.
      *
-     * @param Image\Image $image Image object instance.
-     *
-     * @return $this
+     * @param Image $image Image object instance.
      */
-    public function setImage(Image\Image $image);
+    public function setImage(Image $image): Text;
 
     /**
      * Returns the Image object instance.
-     *
-     * @return Image\Image
      */
-    public function getImage();
+    public function getImage(): ?Image;
 
     /**
      * Sets the text color used for rendering text overlays onto the image.
      *
-     * @param Image\Color $color Color object instance.
-     *
-     * @return $this
+     * @param Color $color Color object instance.
      */
-    public function setTextColor(Image\Color $color);
+    public function setTextColor(Color $color): Text;
 
     /**
      * Returns the text color used for rendering text overlays onto the image.
-     *
-     * @return Image\Color
      */
-    public function getTextColor();
+    public function getTextColor(): ?Color;
 
     /**
      * Sets the path to the font file used for rendering text overlays onto the
@@ -51,35 +48,27 @@ interface Text
      *
      * @param string $path File system path to TTF font file to be used.
      *
-     * @return $this
-     *
      * @throws \InvalidArgumentException Thrown if the font file could not be loaded.
      */
-    public function setTextFont($path);
+    public function setTextFont(string $path): Text;
 
     /**
      * Returns the path to the font file used for rendering text overlays onto
      * the image.
-     *
-     * @return string
      */
-    public function getTextFont();
+    public function getTextFont(): string;
 
     /**
      * Sets the text size used for rendering text overlays onto the image.
      *
      * @param float $size Font size.
-     *
-     * @return $this
      */
-    public function setTextSize($size);
+    public function setTextSize(float $size): Text;
 
     /**
      * Returns the text size used for rendering text overlays onto the image.
-     *
-     * @return float
      */
-    public function getTextSize();
+    public function getTextSize(): float;
 
     /**
      * Renders the given text onto the image resource using the given coordinates.
@@ -88,10 +77,8 @@ interface Text
      * @param int    $yPosition The y-ordinate position of the fonts baseline.
      * @param string $text      The text string in UTF-8 encoding.
      *
-     * @return $this;
-     *
      * @throws \RuntimeException Thrown if $this->image is not a valid image
      *                           resource or the font file isn't set.
      */
-    public function insertText($xPosition, $yPosition, $text);
+    public function insertText(int $xPosition, int $yPosition, string $text): Text;
 }

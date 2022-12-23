@@ -1,33 +1,36 @@
 <?php
+
+declare(strict_types=1);
+
 namespace randomhost\Image\Text\Decorator;
 
-use randomhost\Image;
+use randomhost\Image\Color;
+use randomhost\Image\Text\Text;
 
 /**
- * Decorates a generic image overlay text with a colored border
+ * Decorates a generic image overlay text with a colored border.
  *
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2016 random-host.com
- * @license   http://www.debian.org/misc/bsd.license  BSD License (3 Clause)
- * @link      http://github.random-host.com/image/
+ * @copyright 2022 Random-Host.tv
+ * @license   https://opensource.org/licenses/BSD-3-Clause BSD License (3 Clause)
+ *
+ * @see https://github.random-host.tv
  */
-class Border extends Generic implements Image\Text\Text
+class Border extends Generic implements Text
 {
     /**
-     * Image\Color object instance
+     * Color object instance.
      *
-     * @var Image\Color|null
+     * @var null|Color
      */
-    protected $borderColor = null;
+    protected $borderColor;
 
     /**
      * Sets the border color used for rendering text overlay borders.
      *
-     * @param Image\Color $color Color object instance.
-     *
-     * @return $this
+     * @param Color $color Color object instance.
      */
-    public function setBorderColor(Image\Color $color)
+    public function setBorderColor(Color $color): Border
     {
         $this->borderColor = $color;
 
@@ -36,10 +39,8 @@ class Border extends Generic implements Image\Text\Text
 
     /**
      * Returns the border color used for rendering text overlay borders.
-     *
-     * @return null|\randomhost\Image\Color
      */
-    public function getBorderColor()
+    public function getBorderColor(): ?Color
     {
         return $this->borderColor;
     }
@@ -51,12 +52,10 @@ class Border extends Generic implements Image\Text\Text
      * @param int    $yPosition The y-ordinate position of the fonts baseline.
      * @param string $text      The text string in UTF-8 encoding.
      *
-     * @return $this;
-     *
      * @throws \RuntimeException Thrown if $this->image is not a valid image
      *                           resource or the font file isn't set.
      */
-    public function insertText($xPosition, $yPosition, $text)
+    public function insertText(int $xPosition, int $yPosition, string $text): Text
     {
         $this->insertTextBorder($xPosition, $yPosition, $text);
 
@@ -73,14 +72,12 @@ class Border extends Generic implements Image\Text\Text
      * @param int    $yPosition The y-ordinate position of the fonts baseline.
      * @param string $text      The text string in UTF-8 encoding.
      *
-     * @return $this;
-     *
      * @throws \RuntimeException Thrown if $this->image is not a valid image
      *                           resource or the font file isn't set.
      */
-    protected function insertTextBorder($xPosition, $yPosition, $text)
+    protected function insertTextBorder(int $xPosition, int $yPosition, string $text): Border
     {
-        if (!$this->getBorderColor() instanceof Image\Color) {
+        if (!$this->getBorderColor() instanceof Color) {
             throw new \RuntimeException(
                 'Attempt to render text border without setting a color'
             );
