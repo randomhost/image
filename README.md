@@ -335,7 +335,7 @@ Returns the `Color` used for rendering the border.
 
 ## 3. License
 
-See LICENSE.txt for full license details.
+See [LICENSE.txt](LICENSE.txt) for full license details.
 
 
 [1]: https://github.com/randomhost/image/actions/workflows/php.yml/badge.svg
