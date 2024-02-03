@@ -11,7 +11,7 @@ use randomhost\Image\Text\Text;
  * Decorates a generic image overlay text with a colored border.
  *
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2022 Random-Host.tv
+ * @copyright 2024 Random-Host.tv
  * @license   https://opensource.org/licenses/BSD-3-Clause BSD License (3 Clause)
  *
  * @see https://github.random-host.tv
@@ -20,10 +20,8 @@ class Border extends Generic implements Text
 {
     /**
      * Color object instance.
-     *
-     * @var null|Color
      */
-    protected $borderColor;
+    protected ?Color $borderColor = null;
 
     /**
      * Sets the border color used for rendering text overlay borders.
@@ -49,7 +47,7 @@ class Border extends Generic implements Text
      * Renders the given text onto the image resource, using the given coordinates.
      *
      * @param int    $xPosition The x-ordinate.
-     * @param int    $yPosition The y-ordinate position of the fonts baseline.
+     * @param int    $yPosition The y-ordinate position of the font's baseline.
      * @param string $text      The text string in UTF-8 encoding.
      *
      * @throws \RuntimeException Thrown if $this->image is not a valid image
@@ -69,7 +67,7 @@ class Border extends Generic implements Text
      * coordinates.
      *
      * @param int    $xPosition The x-ordinate.
-     * @param int    $yPosition The y-ordinate position of the fonts baseline.
+     * @param int    $yPosition The y-ordinate position of the font's baseline.
      * @param string $text      The text string in UTF-8 encoding.
      *
      * @throws \RuntimeException Thrown if $this->image is not a valid image

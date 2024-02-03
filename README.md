@@ -35,7 +35,7 @@
 
 This package encapsulates some common GD library operations in PHP classes. It
 was created as part of the `randomhost/webcamoverlay` package but is released as
-a separate component so it can be used in other packages.
+a separate component, so it can be used in other packages.
 
 Because it was created as a dependency of the `randomhost/webcamoverlay` package,
 it does only support a small subset of the available image handling functions.
@@ -59,7 +59,7 @@ $overlay = Image::getInstanceByPath('overlay.png');
 // insert overlay image on top of base image at x 15, y 20
 $image->merge($overlay, 15, 20);
 
-// setup a red text overlay
+// set up a red text overlay
 $text = new Text\Generic($image);
 $text
     ->setTextFont('vera.ttf')
@@ -72,7 +72,7 @@ $text
         )
     );
 
-// setup a white border for the previously defined text overlay
+// set up a white border for the previously defined text overlay
 $text = new Text\Decorator\Border($text);
 $text->setBorderColor(
     new Color(

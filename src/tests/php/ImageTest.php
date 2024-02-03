@@ -11,7 +11,7 @@ use randomhost\Image\Image;
  * Unit test for Image.
  *
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2022 Random-Host.tv
+ * @copyright 2024 Random-Host.tv
  * @license   https://opensource.org/licenses/BSD-3-Clause BSD License (3 Clause)
  *
  * @see https://github.random-host.tv
@@ -86,7 +86,7 @@ class ImageTest extends TestCase
 
         $this->assertInstanceOf(Image::class, $image);
 
-        $this->assertIsResource($image->image);
+        $this->assertInstanceOf(\GdImage::class, $image->image);
     }
 
     /**
@@ -102,7 +102,7 @@ class ImageTest extends TestCase
 
         $this->assertInstanceOf(Image::class, $image);
 
-        $this->assertIsResource($image->image);
+        $this->assertInstanceOf(\GdImage::class, $image->image);
     }
 
     /**
@@ -118,7 +118,7 @@ class ImageTest extends TestCase
 
         $this->assertInstanceOf(Image::class, $image);
 
-        $this->assertIsResource($image->image);
+        $this->assertInstanceOf(\GdImage::class, $image->image);
     }
 
     /**
@@ -209,7 +209,7 @@ class ImageTest extends TestCase
         // build image from test dummy
         $image = Image::getInstanceByPath($dummyPath, $cacheDir);
         $this->assertInstanceOf(Image::class, $image);
-        $this->assertIsResource($image->image);
+        $this->assertInstanceOf(\GdImage::class, $image->image);
         unset($image);
 
         // ensure image is cached
@@ -232,7 +232,7 @@ class ImageTest extends TestCase
         // build image from cache
         $image = Image::getInstanceByPath($dummyPath, $cacheDir);
         $this->assertInstanceOf(Image::class, $image);
-        $this->assertIsResource($image->image);
+        $this->assertInstanceOf(\GdImage::class, $image->image);
         unset($image);
 
         // delete cache file
@@ -273,7 +273,7 @@ class ImageTest extends TestCase
 
         $this->assertInstanceOf(Image::class, $image);
 
-        $this->assertIsResource($image->image);
+        $this->assertInstanceOf(\GdImage::class, $image->image);
     }
 
     /**
@@ -298,8 +298,8 @@ class ImageTest extends TestCase
         $this->assertInstanceOf(Image::class, $firstImage);
         $this->assertInstanceOf(Image::class, $secondImage);
 
-        $this->assertIsResource($firstImage->image);
-        $this->assertIsResource($secondImage->image);
+        $this->assertInstanceOf(\GdImage::class, $firstImage->image);
+        $this->assertInstanceOf(\GdImage::class, $secondImage->image);
 
         $this->assertSame(
             $firstImage,
@@ -328,8 +328,8 @@ class ImageTest extends TestCase
         $this->assertInstanceOf(Image::class, $firstImage);
         $this->assertInstanceOf(Image::class, $secondImage);
 
-        $this->assertIsResource($firstImage->image);
-        $this->assertIsResource($secondImage->image);
+        $this->assertInstanceOf(\GdImage::class, $firstImage->image);
+        $this->assertInstanceOf(\GdImage::class, $secondImage->image);
 
         $firstImage->image = null;
         $this->assertNull($firstImage->image);
@@ -358,8 +358,8 @@ class ImageTest extends TestCase
         $this->assertInstanceOf(Image::class, $firstImage);
         $this->assertInstanceOf(Image::class, $secondImage);
 
-        $this->assertIsResource($firstImage->image);
-        $this->assertIsResource($secondImage->image);
+        $this->assertInstanceOf(\GdImage::class, $firstImage->image);
+        $this->assertInstanceOf(\GdImage::class, $secondImage->image);
 
         $secondImage->image = null;
         $this->assertNull($secondImage->image);
@@ -394,8 +394,8 @@ class ImageTest extends TestCase
         $this->assertInstanceOf(Image::class, $firstImage);
         $this->assertInstanceOf(Image::class, $secondImage);
 
-        $this->assertIsResource($firstImage->image);
-        $this->assertIsResource($secondImage->image);
+        $this->assertInstanceOf(\GdImage::class, $firstImage->image);
+        $this->assertInstanceOf(\GdImage::class, $secondImage->image);
 
         $this->assertSame(
             $firstImage,
@@ -424,8 +424,8 @@ class ImageTest extends TestCase
         $this->assertInstanceOf(Image::class, $firstImage);
         $this->assertInstanceOf(Image::class, $secondImage);
 
-        $this->assertIsResource($firstImage->image);
-        $this->assertIsResource($secondImage->image);
+        $this->assertInstanceOf(\GdImage::class, $firstImage->image);
+        $this->assertInstanceOf(\GdImage::class, $secondImage->image);
 
         $firstImage->image = null;
         $this->assertNull($firstImage->image);
@@ -454,8 +454,8 @@ class ImageTest extends TestCase
         $this->assertInstanceOf(Image::class, $firstImage);
         $this->assertInstanceOf(Image::class, $secondImage);
 
-        $this->assertIsResource($firstImage->image);
-        $this->assertIsResource($secondImage->image);
+        $this->assertInstanceOf(\GdImage::class, $firstImage->image);
+        $this->assertInstanceOf(\GdImage::class, $secondImage->image);
 
         $secondImage->image = null;
         $this->assertNull($secondImage->image);
@@ -483,7 +483,7 @@ class ImageTest extends TestCase
 
         $this->assertInstanceOf(Image::class, $image);
 
-        $this->assertIsResource($image->image);
+        $this->assertInstanceOf(\GdImage::class, $image->image);
 
         ob_start();
 
@@ -509,7 +509,7 @@ class ImageTest extends TestCase
 
         $this->assertInstanceOf(Image::class, $image);
 
-        $this->assertIsResource($image->image);
+        $this->assertInstanceOf(\GdImage::class, $image->image);
 
         $image->image = null;
 
@@ -541,7 +541,7 @@ class ImageTest extends TestCase
 
         $this->assertInstanceOf(Image::class, $image);
 
-        $this->assertIsResource($image->image);
+        $this->assertInstanceOf(\GdImage::class, $image->image);
 
         $this->assertSame($mimeType, $image->getMimeType());
     }
@@ -563,7 +563,7 @@ class ImageTest extends TestCase
 
         $this->assertInstanceOf(Image::class, $image);
 
-        $this->assertIsResource($image->image);
+        $this->assertInstanceOf(\GdImage::class, $image->image);
 
         $this->assertSame(filemtime($imagePath), $image->getModified());
     }
@@ -594,7 +594,7 @@ class ImageTest extends TestCase
 
         $this->assertInstanceOf(Image::class, $image);
 
-        $this->assertIsResource($image->image);
+        $this->assertInstanceOf(\GdImage::class, $image->image);
 
         $this->assertSame($width, $image->getWidth());
     }
@@ -625,7 +625,7 @@ class ImageTest extends TestCase
 
         $this->assertInstanceOf(Image::class, $image);
 
-        $this->assertIsResource($image->image);
+        $this->assertInstanceOf(\GdImage::class, $image->image);
 
         $this->assertSame($height, $image->getHeight());
     }

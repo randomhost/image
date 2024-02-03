@@ -8,7 +8,7 @@ namespace randomhost\Image;
  * Represents a color used in images.
  *
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2022 Random-Host.tv
+ * @copyright 2024 Random-Host.tv
  * @license   https://opensource.org/licenses/BSD-3-Clause BSD License (3 Clause)
  *
  * @see https://github.random-host.tv
@@ -17,33 +17,25 @@ class Color
 {
     /**
      * Red component.
-     *
-     * @var int
      */
-    protected $red = 0;
+    protected int $red = 0;
 
     /**
      * Green component.
-     *
-     * @var int
      */
-    protected $green = 0;
+    protected int $green = 0;
 
     /**
      * Blue component.
-     *
-     * @var int
      */
-    protected $blue = 0;
+    protected int $blue = 0;
 
     /**
      * Alpha value.
      *
      * 0 indicates completely opaque while 127 indicates completely transparent.
-     *
-     * @var int
      */
-    protected $alpha = 0;
+    protected int $alpha = 0;
 
     /**
      * Constructor.

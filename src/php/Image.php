@@ -10,7 +10,7 @@ namespace randomhost\Image;
  * It supports merging other images into the image by passing in other Image objects.
  *
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2022 Random-Host.tv
+ * @copyright 2024 Random-Host.tv
  * @license   https://opensource.org/licenses/BSD-3-Clause BSD License (3 Clause)
  *
  * @see https://github.random-host.tv
@@ -46,67 +46,49 @@ class Image
     private const CACHE_TIME = 60;
 
     /**
-     * Image resource identifier.
-     *
-     * @var resource
+     * \GDImage instance.
      */
-    public $image = false;
+    public ?\GdImage $image = null;
 
     /**
      * Timestamp at call time.
-     *
-     * @var int
      */
-    protected $time;
+    protected int $time;
 
     /**
      * File system path for image caching.
-     *
-     * @var string
      */
-    protected $cacheDir = '';
+    protected string $cacheDir = '';
 
     /**
      * Local path or remote URL of the image file.
-     *
-     * @var string
      */
-    protected $pathFile = '';
+    protected string $pathFile = '';
 
     /**
      * Local cache path of the image file.
-     *
-     * @var string
      */
-    protected $pathCache = '';
+    protected string $pathCache = '';
 
     /**
      * Width of the image in pixels.
-     *
-     * @var int
      */
-    protected $width = 0;
+    protected int $width = 0;
 
     /**
      * Height of the image in pixels.
-     *
-     * @var int
      */
-    protected $height = 0;
+    protected int $height = 0;
 
     /**
      * Mime type of the image.
-     *
-     * @var string
      */
-    protected $mimeType = '';
+    protected string $mimeType = '';
 
     /**
      * Last modified timestamp of the image.
-     *
-     * @var int
      */
-    protected $modified = 0;
+    protected int $modified = 0;
 
     /**
      * Constructor for this class.
@@ -121,7 +103,7 @@ class Image
      */
     public function __destruct()
     {
-        if (is_resource($this->image)) {
+        if ($this->image instanceof \GdImage) {
             // free up memory
             imagedestroy($this->image);
         }
@@ -160,8 +142,8 @@ class Image
         $instance = new self();
 
         // set image dimensions
-        $instance->width = (int) $width;
-        $instance->height = (int) $height;
+        $instance->width = $width;
+        $instance->height = $height;
 
         $instance->createImage();
 
@@ -169,7 +151,7 @@ class Image
     }
 
     /**
-     * Copies the given Image image stream into the image stream of the active
+     * Copies the given image stream into the image stream of the active
      * instance using a scaling strategy.
      *
      * @param Image $srcImage The source image.
@@ -178,7 +160,7 @@ class Image
      * @param int   $strategy Scaling strategy. Default: self::MERGE_SCALE_SRC
      *
      * @throws \RuntimeException Thrown if $this->image or $srcImage->image is
-     *                           not a valid image resource.
+     *                           not an instance of \GDImage.
      */
     public function merge(
         Image $srcImage,
@@ -186,7 +168,7 @@ class Image
         int $dstY,
         int $strategy = self::MERGE_SCALE_SRC
     ): Image {
-        if (!is_resource($this->image) || !is_resource($srcImage->image)) {
+        if (!$this->image instanceof \GdImage || !$srcImage->image instanceof \GdImage) {
             throw new \RuntimeException(
                 'Attempt to merge image data using an invalid image resource.'
             );
@@ -200,6 +182,7 @@ class Image
                 $dstHeight = $this->height;
 
                 break;
+
                 // merge using the destination image dimensions, do not upscale
             case self::MERGE_SCALE_DST_NO_UPSCALE:
                 $dstWidth = $this->width;
@@ -213,6 +196,7 @@ class Image
                 }
 
                 break;
+
                 // merge using the source image dimensions
             case self::MERGE_SCALE_SRC:
             default:
@@ -224,12 +208,12 @@ class Image
         @imagecopyresampled(
             $this->image,
             $srcImage->image,
-            (int) $dstX,
-            (int) $dstY,
+            $dstX,
+            $dstY,
             0,
             0,
-            (int) $dstWidth,
-            (int) $dstHeight,
+            $dstWidth,
+            $dstHeight,
             $srcImage->width,
             $srcImage->height
         );
@@ -238,7 +222,7 @@ class Image
     }
 
     /**
-     * Copies the given Image image stream into the image stream of the active
+     * Copies the given image stream into the image stream of the active
      * instance while applying the given alpha transparency.
      *
      * This method does not support scaling.
@@ -249,7 +233,7 @@ class Image
      * @param int   $alpha    Alpha value (0-127)
      *
      * @throws \RuntimeException Thrown if $this->image or $srcImage->image is
-     *                           not a valid image resource.
+     *                           not an instance of \GDImage.
      */
     public function mergeAlpha(
         Image $srcImage,
@@ -257,7 +241,7 @@ class Image
         int $dstY,
         int $alpha = 127
     ): Image {
-        if (!is_resource($this->image) || !is_resource($srcImage->image)) {
+        if (!$this->image instanceof \GdImage || !$srcImage->image instanceof \GdImage) {
             throw new \RuntimeException(
                 'Attempt to merge image data using an invalid image resource.'
             );
@@ -269,8 +253,8 @@ class Image
         @imagecopymerge(
             $this->image,
             $srcImage->image,
-            (int) $dstX,
-            (int) $dstY,
+            $dstX,
+            $dstY,
             0,
             0,
             $srcImage->width,
@@ -284,12 +268,11 @@ class Image
     /**
      * Outputs the image stream to the browser.
      *
-     * @throws \RuntimeException Thrown if $this->image is not a valid image
-     *                           resource.
+     * @throws \RuntimeException Thrown if $this->image is not an instance of \GDImage.
      */
     public function render(): Image
     {
-        if (!is_resource($this->image)) {
+        if (!$this->image instanceof \GdImage) {
             throw new \RuntimeException(
                 'Attempt to render invalid resource as image.'
             );
@@ -306,7 +289,7 @@ class Image
      */
     public function getMimeType(): string
     {
-        return (string) $this->mimeType;
+        return $this->mimeType;
     }
 
     /**
@@ -314,7 +297,7 @@ class Image
      */
     public function getModified(): int
     {
-        return (int) $this->modified;
+        return $this->modified;
     }
 
     /**
@@ -322,7 +305,7 @@ class Image
      */
     public function getWidth(): int
     {
-        return (int) $this->width;
+        return $this->width;
     }
 
     /**
@@ -330,7 +313,7 @@ class Image
      */
     public function getHeight(): int
     {
-        return (int) $this->height;
+        return $this->height;
     }
 
     /**
@@ -494,33 +477,19 @@ class Image
         }
 
         // detect image type
-        switch ($read[2]) {
-            case IMAGETYPE_GIF:
-                $this->image = @imagecreatefromgif($path);
+        $image = match ($read[2]) {
+            IMAGETYPE_GIF => @imagecreatefromgif($path),
+            IMAGETYPE_JPEG => @imagecreatefromjpeg($path),
+            IMAGETYPE_PNG => @imagecreatefrompng($path),
+            default => throw new \UnexpectedValueException(
+                sprintf(
+                    'Image type %s not supported',
+                    image_type_to_mime_type($read[2])
+                )
+            ),
+        };
 
-                break;
-
-            case IMAGETYPE_JPEG:
-                $this->image = @imagecreatefromjpeg($path);
-
-                break;
-
-            case IMAGETYPE_PNG:
-                $this->image = @imagecreatefrompng($path);
-
-                break;
-
-            default:
-                // image type not supported
-                throw new \UnexpectedValueException(
-                    sprintf(
-                        'Image type %s not supported',
-                        image_type_to_mime_type($read[2])
-                    )
-                );
-        }
-
-        if (false === $this->image) {
+        if (!$image instanceof \GdImage) {
             throw new \RuntimeException(
                 sprintf(
                     "Couldn't read image at %s",
@@ -528,6 +497,8 @@ class Image
                 )
             );
         }
+
+        $this->image = $image;
 
         // set image dimensions
         $this->width = $read[0];

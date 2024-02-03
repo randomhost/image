@@ -12,7 +12,7 @@ use randomhost\Image\Text\Text;
  * Decorates a generic image overlay text with additional functionality.
  *
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2022 Random-Host.tv
+ * @copyright 2024 Random-Host.tv
  * @license   https://opensource.org/licenses/BSD-3-Clause BSD License (3 Clause)
  *
  * @see https://github.random-host.tv
@@ -21,10 +21,8 @@ abstract class Generic implements Text
 {
     /**
      * Text object instance.
-     *
-     * @var Text
      */
-    protected $text;
+    protected Text $text;
 
     /**
      * Constructor for this class.

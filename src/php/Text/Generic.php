@@ -13,7 +13,7 @@ use randomhost\Image\Image;
  * It supports rendering of text messages onto Image objects.
  *
  * @author    Ch'Ih-Yu <chi-yu@web.de>
- * @copyright 2022 Random-Host.tv
+ * @copyright 2024 Random-Host.tv
  * @license   https://opensource.org/licenses/BSD-3-Clause BSD License (3 Clause)
  *
  * @see https://github.random-host.tv
@@ -22,45 +22,35 @@ class Generic implements Text
 {
     /**
      * Image object instance.
-     *
-     * @var Image
      */
-    protected $image;
+    protected ?Image $image;
 
     /**
      * Text size for rendering text overlays onto the image.
-     *
-     * @var float
      */
-    protected $textSize = 7.0;
+    protected float $textSize = 7.0;
 
     /**
      * Text angle for rendering text overlays onto the image.
-     *
-     * @var float
      */
-    protected $textAngle = 0.0;
+    protected float $textAngle = 0.0;
 
     /**
      * Text color identifier.
-     *
-     * @var null|Color
      */
-    protected $textColor;
+    protected ?Color $textColor = null;
 
     /**
      * Path to the font file used for rendering text overlays onto the image.
-     *
-     * @var string
      */
-    protected $textFontPath = '';
+    protected string $textFontPath = '';
 
     /**
      * Constructor for this class.
      *
-     * @param Image $image Optional: randomhost\Image instance.
+     * @param null|Image $image Optional: randomhost\Image instance.
      */
-    public function __construct(Image $image = null)
+    public function __construct(?Image $image = null)
     {
         $this->image = $image;
     }
@@ -142,7 +132,7 @@ class Generic implements Text
      */
     public function setTextSize(float $size): Text
     {
-        $this->textSize = (float) $size;
+        $this->textSize = $size;
 
         return $this;
     }
@@ -159,7 +149,7 @@ class Generic implements Text
      * Renders the given text onto the image resource, using the given coordinates.
      *
      * @param int    $xPosition The x-ordinate.
-     * @param int    $yPosition The y-ordinate position of the fonts baseline.
+     * @param int    $yPosition The y-ordinate position of the font's baseline.
      * @param string $text      The text string in UTF-8 encoding.
      *
      * @throws \RuntimeException Thrown if $this->image is not a valid image
@@ -168,7 +158,7 @@ class Generic implements Text
     public function insertText(int $xPosition, int $yPosition, string $text): Text
     {
         if (!$this->getImage() instanceof Image
-            || !is_resource($this->getImage()->image)
+            || !$this->getImage()->image instanceof \GdImage
         ) {
             throw new \RuntimeException(
                 'Attempt to render text onto invalid image resource'
