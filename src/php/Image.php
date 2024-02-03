@@ -508,7 +508,13 @@ class Image
         $this->mimeType = $read['mime'];
 
         // set modified date
-        $this->modified = @filemtime($path);
+        $modified = @filemtime($path);
+        if (!is_int($modified)) {
+            // filemtime() fails on remote URLs, so we fall back to "now"
+            $modified = time();
+        }
+
+        $this->modified = $modified;
     }
 
     /**
